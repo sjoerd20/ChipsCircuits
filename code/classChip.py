@@ -1,8 +1,8 @@
 # class chips & circuits
 
-class Chiplayer(self):
-    def __init__(self, level, length, width):
-        self.level = level
+class Chip(self):
+    def __init__(self, data_file, length, width):
+        self.count_levels = 1
         self.length = length
         self.width = width
 
