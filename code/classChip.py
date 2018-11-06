@@ -13,6 +13,7 @@ class Chip():
         self.vert_length = vert_length
         self.file_circuit = file_circuit
         self.dict_nodes = {}        # contains all nodes with coord. as keys
+        L_gates = []                # contains all gates coord.
 
         # initiate first level of chip
         self.init_nodes(0)
@@ -33,16 +34,19 @@ class Chip():
     def load_chip(self):
         with open(self.file_circuit, 'r') as f_circuit:
 
-            # write code to load the chip from file_chip
-            cur_coordinates = []        # temp list for current gate
-            new_gate = False     # checks if new gate is reached
+            cur_coordinates = []    # temp list for current gate
+            new_gate = False        # checks if new gate is reached
             for line in f_circuit:
                 for char in line:
                     if char == "(":
                         new_gate = True
                     elif char == ")":
                         new_gate == False
-                        # TODO change this node's is_free to False
-                        # and add to list with all gates incl. gate number
+                        id = str(cur_coordinates[0]) + str(cur_coordinates[1])
+                                 + "0")
+                        self.dict_nodes.get(id).is_free = False
+                        L_gates.append(id)
+                        cur_coordinates = []
+
                     elif new_gate == True and is_number(char):
                         cur_coordinates.append(int(char))
