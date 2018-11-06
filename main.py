@@ -13,14 +13,14 @@ def main():
     load net lists
     """
 
-    load_netlists(directory + "/data/netlists.txt")
+    # load_netlists(directory + "/data/netlists.txt")
 
     """
     instantiate circuit 0 and 1
     """
 
-    chip0 = Chip(directory + "/data/circuit0.txt")
-    chip1 = Chip(directory + "/data/circuit1.txt")
+    chip0 = Chip(directory + "/data/circuit0.txt", 18, 13)
+    # chip1 = Chip(directory + "/data/circuit1.txt")
 
     return
 
