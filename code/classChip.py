@@ -1,6 +1,6 @@
 # class chips & circuits
 
-class Chip(self):
+class Chip():
     def __init__(self, file_circuit, length, width):
         self.count_levels = 1
         self.length = length
@@ -10,18 +10,16 @@ class Chip(self):
 
         self.load_chip(self)
 
-    # loads all chips
+    # loads the chip
     def load_chip(self):
-        dir_chip = '../data/' + self.file_circuit
-        with open(dir_chip, 'r') as file_circuit:
+        with open(file_circuit, 'r') as f_circuit:
 
             # write code to load the chip from file_chip
-            return True
-        return False
+            NotImplementedError()
+        NotImplementedError()
 
-class Node(self):
-    def __init__(self, id, is_gate=False):
-        self.id = id
-        self.is_gate = is_gate
-        self.used = False
-        self.id_previous_node = None
+class Node():
+    def __init__(self, id, coordinates, is_free):
+        self.id = id                        # id xyz
+        self.coordinates = coordinates      # tuple with x, y, z coordinates
+        self.is_free = is_free              # free means not used and no gate
