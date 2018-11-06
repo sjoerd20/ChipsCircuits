@@ -1,10 +1,23 @@
 # class chips & circuits
 
 class Chip(self):
-    def __init__(self, data_file, length, width):
+    def __init__(self, file_circuit, length, width):
         self.count_levels = 1
         self.length = length
         self.width = width
+        self.file_circuit = file_circuit
+        self.forbidden = []          # contains coordinates used nodes and gates
+
+        self.load_chip(self)
+
+    # loads all chips
+    def load_chip(self):
+        dir_chip = '../data/' + self.file_circuit
+        with open(dir_chip, 'r') as file_circuit:
+
+            # write code to load the chip from file_chip
+            return True
+        return False
 
 class Node(self):
     def __init__(self, id, is_gate=False):
