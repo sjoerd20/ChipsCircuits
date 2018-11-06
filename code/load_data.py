@@ -1,8 +1,7 @@
-# loads the netlists
+# loads the netlists and returns a list of tuples
 def load_netlists(file_net_lists):
-    dir_netlists = '../data/' + file_net_lists
-    with open(v, 'r') as f_netlists:
+    with open(file_net_lists, 'r') as f_netlists:
 
         # write code to load the net lists from f_netlists
-        return True
-    return False
+        raise NotImplementedError()
+    return NotImplementedError()
