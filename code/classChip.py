@@ -12,18 +12,21 @@ class Chip():
         self.horiz_length = horiz_length
         self.vert_length = vert_length
         self.file_circuit = file_circuit
-        self.forbidden = []          # contains coordinates used nodes and gates
+        self.dict_nodes = {}        # contains all nodes with coord. as keys
 
+        # initiate first level of chip
         self.init_nodes(0)
 
 
-    # init nodes
+    # init nodes at level z and store them in dict_nodes
     def init_nodes(self, z):
-        L_nodes = []
         for x in range(self.horiz_length):
             for y in range(self.vert_length):
+
                 # TODO make a dict instead of list with tuple? coordinates as keys
-                L_nodes.append(Node(id, (x, y, z), True))
+                id = str(x) + ", "+ str(y) + ", " + str(z)
+                node = Node(id, (x, y, z), True)
+                self.dict_nodes[id] = node
 
 
     # loads the chip
