@@ -28,6 +28,12 @@ def test(circuit, netlist, algorithm):
     cost = d_sorted_cost = adj_sorted_cost = 0
 
     chip = Chip(circuit, 18, 13)
+    for net in netlist:
+      cost += algorithm(chip, circuit, net, go_up)
+      go_up = not go_up
+    print("Unsorted =", cost)
+
+    chip = Chip(circuit, 18, 13)
     netlist.sort(key=lambda net: distance(circuit[net[0]], circuit[net[1]]))
     for net in netlist:
       d_sorted_cost += algorithm(chip, circuit, net, go_up)
@@ -41,12 +47,6 @@ def test(circuit, netlist, algorithm):
       adj_sorted_cost += algorithm(chip, circuit, net, go_up)
       go_up = not go_up
     print("Adjusted distance sorted =", adj_sorted_cost)
-
-    chip = Chip(circuit, 18, 13)
-    for net in netlist:
-      cost += algorithm(chip, circuit, net, go_up)
-      go_up = not go_up
-    print("Unsorted =", cost)
 
     print("Lower bound =", lower_bound(circuit, netlist))
 
