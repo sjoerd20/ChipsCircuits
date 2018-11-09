@@ -2,7 +2,7 @@ def distance(coords_a, coords_b):
   return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1])
 
 # delta x * delta y, POSSIBLY an improvement; does the simplest/most straight paths first
-def adjusted_distance(coords_a, coords_b):
+def area(coords_a, coords_b):
   return abs(coords_a[0] - coords_b[0]) * abs(coords_a[1] - coords_b[1])
 
 # largest lower bound
