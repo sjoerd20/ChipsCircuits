@@ -15,33 +15,41 @@ def main():
     circuits = load_data(directory + "/data/circuits.txt")
     netlists = load_data(directory + "/data/netlists.txt")
 
-    test(circuits.circuit_0, netlists.netlist_1, algorithm)
-    
+    test(circuits.circuit_0, 18, 13, netlists.netlist_2, algorithm)
+    # print(circuits.circuit_0)
+    # print(circuits.circuit_1)
+    # print(netlists.netlist_1)
+    # print(netlists.netlist_4)
+    # test(circuits.circuit_1, 18, 17, netlists.netlist_4, algorithm)
+
 
     return
 
 
 # to test with certain circuits and netlists
-def test(circuit, netlist, algorithm):
-    
+def test(circuit, horz_length, vert_length, netlist, algorithm):
+
     go_up = True
     cost = d_sorted_cost = adj_sorted_cost = 0
 
-    chip = Chip(circuit, 18, 13)
+    # cost without sorting
+    chip = Chip(circuit, horz_length, vert_length)
     for net in netlist:
       cost += algorithm(chip, circuit, net, go_up)
       go_up = not go_up
     print("Unsorted =", cost)
 
-    chip = Chip(circuit, 18, 13)
+    # cost with sorting from shortest to longest distance
+    chip = Chip(circuit, horz_length, vert_length)
     netlist.sort(key=lambda net: distance(circuit[net[0]], circuit[net[1]]))
     for net in netlist:
       d_sorted_cost += algorithm(chip, circuit, net, go_up)
       go_up = not go_up
     print("Distance sorted =", d_sorted_cost)
 
-    chip = Chip(circuit, 18, 13)
-    netlist.sort(key=lambda net: [distance(circuit[net[0]], circuit[net[1]]), 
+    # cost with adjusted sorting
+    chip = Chip(circuit, horz_length, vert_length)
+    netlist.sort(key=lambda net: [distance(circuit[net[0]], circuit[net[1]]),
     adjusted_distance(circuit[net[0]], circuit[net[1]])])
     for net in netlist:
       adj_sorted_cost += algorithm(chip, circuit, net, go_up)
@@ -51,10 +59,10 @@ def test(circuit, netlist, algorithm):
     print("Lower bound =", lower_bound(circuit, netlist))
 
     chip.load_chip()
-    for z in range(-4,5):
+    for z in range(chip.lower_levels, chip.higher_levels + 1):
       print("Layer", z)
-      for y in range(13):
-        for x in range(18):
+      for y in range(vert_length):
+        for x in range(horz_length):
           print("|",end="")
           id = str(x) + ", " + str(y) + ", " + str(z)
           if chip.dict_nodes.get(id) is None:

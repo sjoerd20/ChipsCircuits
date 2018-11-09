@@ -9,7 +9,8 @@ class Node():
 
 class Chip():
     def __init__(self, circuit, horiz_length, vert_length):
-        self.count_levels = 1
+        self.lower_levels = 0
+        self.higher_levels = 0
         self.horiz_length = horiz_length
         self.vert_length = vert_length
         self.circuit = circuit
@@ -22,6 +23,10 @@ class Chip():
 
     # init nodes at level z and store them in dict_nodes
     def init_nodes(self, z):
+        if z < 0:
+            self.lower_levels -= 1
+        elif z > 0:
+            self.higher_levels += 1
         for x in range(self.horiz_length):
             for y in range(self.vert_length):
                 # TODO make a dict instead of list with tuple? coordinates as keys
