@@ -5,7 +5,10 @@ class Node():
 		self.coordinates = coordinates      # tuple with x, y, z coordinates
 		self.is_free = is_free              # free means not used
 		self.is_gate = False
+		self.L_neighbours = []				# list w/ id's of neighbours
 
+	def add_neighbours_to_list(self, neighbour_id):
+		self.L_neighbours.append(neighbour_id)
 
 class Chip():
 	def __init__(self, circuit, horiz_length, vert_length):
@@ -17,8 +20,9 @@ class Chip():
 		self.dict_nodes = {}                # contains all nodes with coord. as keys
 		self.L_gates = []                   # contains all gates coord.
 
-		# initiate first level of chip
-		self.init_nodes(0)
+		# initiate all levels of the chip
+		for z in range(8):
+			self.init_nodes(z)
 
 
 	# init nodes at level z and store them in dict_nodes
@@ -34,6 +38,34 @@ class Chip():
 				node = Node(id, (x, y, z), True)
 				self.dict_nodes[id] = node
 
+		# add neighbours for all nodes
+		for id, node in self.dict_nodes.items():
+			self.add_neighbours(node)
+
+	# add the neighbour_id to each node instance
+	def add_neighbours(self, node):
+		coordinates = node.coordinates
+		temp_x, temp_y, temp_z = coordinates[0], coordinates[1], coordinates[2]
+
+		# TODO make function who does this efficiently
+		neighbour_id = str(temp_x + 1) + ", " + str(temp_y) + ", " + str(temp_z)
+		if self.dict_nodes.get(neighbour_id) != None:
+			node.add_neighbours_to_list(neighbour_id)
+		neighbour_id = str(temp_x - 1) + ", " + str(temp_y) + ", " + str(temp_z)
+		if self.dict_nodes.get(neighbour_id) != None:
+			node.add_neighbours_to_list(neighbour_id)
+		neighbour_id = str(temp_x) + ", " + str(temp_y + 1) + ", " + str(temp_z)
+		if self.dict_nodes.get(neighbour_id) != None:
+			node.add_neighbours_to_list(neighbour_id)
+		neighbour_id = str(temp_x) + ", " + str(temp_y - 1) + ", " + str(temp_z)
+		if self.dict_nodes.get(neighbour_id) != None:
+			node.add_neighbours_to_list(neighbour_id)
+		neighbour_id = str(temp_x) + ", " + str(temp_y) + ", " + str(temp_z + 1)
+		if self.dict_nodes.get(neighbour_id) != None:
+			node.add_neighbours_to_list(neighbour_id)
+		neighbour_id = str(temp_x) + ", " + str(temp_y) + ", " + str(temp_z - 1)
+		if self.dict_nodes.get(neighbour_id) != None:
+			node.add_neighbours_to_list(neighbour_id)
 
 	# loads the chip
 	def load_chip(self):
