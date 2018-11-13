@@ -2,6 +2,7 @@
 import sys, os
 directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
+sys.path.append(os.path.join(directory, "results"))
 
 from classChip import Chip
 from load_data import load_data
@@ -35,16 +36,16 @@ def test(circuit, horz_length, vert_length, netlist, algorithm):
     # cost without sorting
     chip = Chip(circuit, horz_length, vert_length)
     for net in netlist:
-      cost += algorithm(chip, circuit, net, go_up)
-      go_up = not go_up
+        cost += algorithm(chip, circuit, net, go_up)
+        go_up = not go_up
     print("Unsorted =", cost)
 
     # cost with sorting from shortest to longest distance
     chip = Chip(circuit, horz_length, vert_length)
     netlist.sort(key=lambda net: distance(circuit[net[0]], circuit[net[1]]))
     for net in netlist:
-      d_sorted_cost += algorithm(chip, circuit, net, go_up)
-      go_up = not go_up
+        d_sorted_cost += algorithm(chip, circuit, net, go_up)
+        go_up = not go_up
     print("Distance sorted =", d_sorted_cost)
 
     # cost with adjusted sorting
@@ -52,29 +53,46 @@ def test(circuit, horz_length, vert_length, netlist, algorithm):
     netlist.sort(key=lambda net: [distance(circuit[net[0]], circuit[net[1]]),
     adjusted_distance(circuit[net[0]], circuit[net[1]])])
     for net in netlist:
-      adj_sorted_cost += algorithm(chip, circuit, net, go_up)
-      go_up = not go_up
+        adj_sorted_cost += algorithm(chip, circuit, net, go_up)
+        go_up = not go_up
     print("Adjusted distance sorted =", adj_sorted_cost)
 
     print("Lower bound =", lower_bound(circuit, netlist))
 
     chip.load_chip()
     for z in range(chip.lower_levels, chip.higher_levels + 1):
-      print("Layer", z)
-      for y in range(vert_length):
-        for x in range(horz_length):
-          print("|",end="")
-          id = str(x) + ", " + str(y) + ", " + str(z)
-          if chip.dict_nodes.get(id) is None:
-            print(" ",end="")
-          elif chip.dict_nodes.get(id).is_free:
-            print(" ",end="")
-          elif chip.dict_nodes.get(id).is_gate:
-            print("o",end="")
-          else:
-            print("-",end="")
-        print("|")
+        print("Layer", z)
+        for y in range(vert_length):
+            for x in range(horz_length):
+                print("|",end="")
+                id = str(x) + ", " + str(y) + ", " + str(z)
+                if chip.dict_nodes.get(id) is None:
+                    print(" ",end="")
+                elif chip.dict_nodes.get(id).is_free:
+                    print(" ",end="")
+                elif chip.dict_nodes.get(id).is_gate:
+                    print("o",end="")
+                else:
+                    print("-",end="")
+            print("|")
 
+    # print chip to file for presentation
+    for z in range(chip.lower_levels, chip.higher_levels + 1):
+        with open(directory + "/results/layer"+ str(z) + ".txt", "w+") as f:
+            f.write("Laag " + str(z) + "\n")
+            for y in range(vert_length):
+                for x in range(horz_length):
+                    f.write("|")
+                    id = str(x) + ", " + str(y) + ", " + str(z)
+                    if chip.dict_nodes.get(id) is None:
+                        f.write(" ")
+                    elif chip.dict_nodes.get(id).is_free:
+                        f.write(" ")
+                    elif chip.dict_nodes.get(id).is_gate:
+                        f.write("o")
+                    else:
+                        f.write("-")
+                f.write("|\n")
 
 if __name__ == "__main__":
     main()
