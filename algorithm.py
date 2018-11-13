@@ -13,7 +13,6 @@ def lower_bound(circuit, netlist):
   	# can still be improved
 	return lower_bound
 
-# smallest upper bound
 def upper_bound(circuit, netlist):
   	# TODO
 	return upper_bound
