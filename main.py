@@ -19,14 +19,14 @@ def main():
 
 	chip = Chip(circuits.circuit_0, 18, 13)
 
-	# test(circuits.circuit_0, 18, 13, netlists.netlist_1, algorithm)
-	# test(circuits.circuit_0, 18, 13, netlists.netlist_2, algorithm)
-	# test(circuits.circuit_0, 18, 13, netlists.netlist_3, algorithm)
-	#
-	#
-	# test(circuits.circuit_1, 18, 17, netlists.netlist_4, algorithm)
-	# test(circuits.circuit_1, 18, 17, netlists.netlist_5, algorithm)
-	# test(circuits.circuit_1, 18, 17, netlists.netlist_6, algorithm)
+	test(circuits.circuit_0, 18, 13, netlists.netlist_1, algorithm)
+	test(circuits.circuit_0, 18, 13, netlists.netlist_2, algorithm)
+	test(circuits.circuit_0, 18, 13, netlists.netlist_3, algorithm)
+
+
+	test(circuits.circuit_1, 18, 17, netlists.netlist_4, algorithm)
+	test(circuits.circuit_1, 18, 17, netlists.netlist_5, algorithm)
+	test(circuits.circuit_1, 18, 17, netlists.netlist_6, algorithm)
 
 	return
 
