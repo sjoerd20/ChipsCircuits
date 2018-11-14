@@ -1,3 +1,5 @@
+import shared_functions as sf
+
 def distance(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1])
 
@@ -91,7 +93,7 @@ def algorithm(chip, circuit, net, go_up = True):
 			z -= 1
 			id = str(current_x) + ", " + str(current_y) + ", " + str(z)
 			chip.dict_nodes.get(id).is_free = False
-		
+
 		elif z < 0:
 			z += 1
 			id = str(current_x) + ", " + str(current_y) + ", " + str(z)
