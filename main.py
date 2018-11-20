@@ -22,6 +22,7 @@ def main():
 	netlist = netlists.netlist_1
 	algorithm = a_star
 
+	netlist.sort(key=lambda net: area(circuit[net[0]], circuit[net[1]]))
 	test(circuit, 18, 13, netlist, algorithm, "unsorted")
 
 	"""
@@ -45,13 +46,13 @@ def main():
 def test(circuit, width, height, netlist, algorithm, sort):
 	print(algorithm.__name__)
 	print("circuit of length", width, "and height", height)
-	print()
+	print(netlist)
 
 	cost = 0
 	chip = Chip(circuit, width, height)
 	chip.load_chip()
 	for net in netlist:
-		print(chip.circuit[net[0]], chip.circuit[net[1]])
+		print((net[0], net[1]))
 		cost += algorithm(chip, net)
 	print("Total cost, " + sort + " =", cost)
 

@@ -31,19 +31,17 @@ def a_star(chip, net):
 		current = queue.get()
 		if current == goal:
 			break
-		for next in chip.neighbors(current, start, goal):
-
-			# TODO klopt het dat voor elke neighbor de current node wordt toegevoegd?
-			if current not in shortest_path:
-				shortest_path.append(current)
+		for next in chip.neighbors(current, goal):
 			new_cost = cost_so_far[current] + 1
 			if next not in cost_so_far or new_cost < cost_so_far[next]:
 				cost_so_far[next] = new_cost
 				priority = new_cost + heuristic(goal, next)
 				queue.put(next, priority)
 				came_from[next] = current
-				shortest_path.remove(current)
-
-	# TODO What is chip.walls??
+	prev = goal		
+	while came_from[prev] is not None:
+		shortest_path.append(came_from[prev])
+		prev = came_from[prev]
+	print(shortest_path)
 	chip.walls += shortest_path
 	return cost_so_far[goal]

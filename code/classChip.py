@@ -50,7 +50,7 @@ class Chip():
 	def passable(self, id):
 		return id not in self.walls
 
-	def neighbors(self, id, start, goal):
+	def neighbors(self, id, goal):
 		(x, y, z) = id
 		results = [(x+1, y, z), (x, y-1, z), (x-1, y, z), (x, y+1, z), (x, y, z-1), (x, y, z+1)]
 		if goal not in results:
