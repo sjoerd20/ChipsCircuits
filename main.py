@@ -2,10 +2,12 @@
 import sys, os
 directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
+sys.path.append(os.path.join(directory, "code" , "algorithms"))
 
 from classChip import *
 from load_data import load_data
-from algorithm import *
+from a_star import *
+from greedy import *
 
 def main():
 
@@ -29,7 +31,7 @@ def main():
 	netlist.sort(key=lambda net: area(circuit[net[0]], circuit[net[1]]))
 	test(circuit, 18, 13, netlist, algorithm, "sorted by area")
 
-	netlist.sort(key=lambda net: [distance(circuit[net[0]], circuit[net[1]]), 
+	netlist.sort(key=lambda net: [distance(circuit[net[0]], circuit[net[1]]),
 	area(circuit[net[0]], circuit[net[1]])])
 	test(circuit, 18, 13, netlist, algorithm, "sorted by distance, then by area")
 
