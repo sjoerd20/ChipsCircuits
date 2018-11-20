@@ -8,6 +8,7 @@ from classChip import *
 from load_data import load_data
 from a_star import *
 from greedy import *
+import visualization
 
 def main():
 
@@ -43,7 +44,7 @@ def main():
 # to test with certain circuits and netlists
 def test(circuit, width, height, netlist, algorithm, sort):
 	print(algorithm.__name__)
-	print("circuit van lengte", width, "en hoogte", height)
+	print("circuit of length", width, "and height", height)
 	print()
 
 	cost = 0
@@ -57,23 +58,8 @@ def test(circuit, width, height, netlist, algorithm, sort):
 	print("Lower bound =", lower_bound(circuit, netlist))
 	print()
 
-"""
-	for z in range(chip.levels):
-		print("Layer", z)
-		for y in range(height):
-			for x in range(width):
-				print("|",end="")
-				id = str(x) + ", " + str(y) + ", " + str(z)
-				if chip.nodes.get(id) is None:
-					print(" ",end="")
-				elif chip.nodes.get(id).is_free:
-					print(" ",end="")
-				elif chip.nodes.get(id).is_gate:
-					print("o",end="")
-				else:
-					print("-",end="")
-			print("|")
-"""
+	# print grid
+	visualization.print_simple_grid(chip)
 
 
 if __name__ == "__main__":

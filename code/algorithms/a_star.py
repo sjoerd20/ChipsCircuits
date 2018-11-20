@@ -1,6 +1,7 @@
 import heapq
 from shared_functions import *
 
+# implements a priority queue using heapq
 class PriorityQueue():
 	def __init__(self):
 		self.elements = []
@@ -14,6 +15,7 @@ class PriorityQueue():
 	def get(self):
 		return heapq.heappop(self.elements)[1]
 
+# TODO explanation of a_star algorithm
 def a_star(chip, net):
 	start = chip.circuit[net[0]] + (0,)
 	goal = chip.circuit[net[1]] + (0,)
@@ -42,6 +44,6 @@ def a_star(chip, net):
 				came_from[next] = current
 				shortest_path.remove(current)
 
-	# What is chip.walls??
+	# TODO What is chip.walls??
 	chip.walls += shortest_path
 	return cost_so_far[goal]

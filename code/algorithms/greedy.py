@@ -8,7 +8,7 @@ def greedy(chip, net):
 	end_x = chip.circuit[net[1]][0]
 	end_y = chip.circuit[net[1]][1]
 
-	while (x != end_x or y != end_y or z != 0):
+	while (x != end_x or y != end_y or z != 0) and z <= 7:
 
 		if x < end_x:
 			id = str(x + 1) + ", " + str(y) + ", " + str(z)
