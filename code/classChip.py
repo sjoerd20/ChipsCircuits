@@ -74,6 +74,8 @@ class Chip():
 			results = filter(self.passable, results)
 		return results
 
-class Routes():
-	def __init__(self):
-		L_routes = []
+# holds a single path
+class Path():
+	def __init__(self, net):
+		self.net = net		# the net from the path
+		self.path = path 	# holds the nodes of the path
