@@ -19,7 +19,7 @@ def main():
 	netlists = load_data(directory + "/data/netlists.txt")
 
 	circuit = circuits.circuit_0
-	netlist = netlists.netlist_1
+	netlist = netlists.netlist_1[:10]
 	algorithm = a_star
 
 	netlist.sort(key=lambda net: area(circuit[net[0]], circuit[net[1]]))

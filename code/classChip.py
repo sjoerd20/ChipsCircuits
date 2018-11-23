@@ -7,6 +7,11 @@ class Node():
 		self.is_gate = False
 		self.L_neighbours = {}				# contains all neighbours (id, node)
 
+# holds a single path
+class Path():
+	def __init__(self, net):
+		self.net = net		# the net from the path
+		self.path = path 	# holds the nodes of the path
 
 class Chip():
 	def __init__(self, circuit, width, height):
@@ -16,6 +21,7 @@ class Chip():
 		self.circuit = circuit
 		self.nodes = {}                	# contains all nodes with coord. as keys
 		self.walls = []                 # contains all gates coord.
+		self.path = []					# list of all paths
 
 		# initiate all levels of the chip
 		for z in range(8):
@@ -24,7 +30,6 @@ class Chip():
 		# store all neighbours of each nodes
 		for id, node in self.nodes.items():
 			self.find_neighbours(id, node)
-
 
 	# init nodes at level z and store them in nodes
 	def init_nodes(self, z):
@@ -73,9 +78,3 @@ class Chip():
 			results = filter(self.in_bounds, results)
 			results = filter(self.passable, results)
 		return results
-
-# holds a single path
-class Path():
-	def __init__(self, net):
-		self.net = net		# the net from the path
-		self.path = path 	# holds the nodes of the path
