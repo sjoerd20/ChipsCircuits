@@ -22,8 +22,8 @@ class Chip():
 			self.init_nodes(z)
 
 		# store all neighbours of each nodes
-		for id, node in self.nodes:
-			find_neighbours(id, node)
+		for id, node in self.nodes.items():
+			self.find_neighbours(id, node)
 
 
 	# init nodes at level z and store them in nodes
@@ -43,9 +43,8 @@ class Chip():
 		for neighbour in possible_neighbours:
 
 			# check for each neighbour if they exist
-			if neighbour != None:
-				id = str(neighbour[0]) + ", " + str(neighbour[1]) + ", " +
-					str(neighbour[2])
+			id = str(neighbour[0]) + ", " + str(neighbour[1]) + ", " + str(neighbour[2])
+			if id in self.nodes:
 				node.L_neighbours[id] = self.nodes[id]
 
 	# loads the chip
@@ -74,3 +73,7 @@ class Chip():
 			results = filter(self.in_bounds, results)
 			results = filter(self.passable, results)
 		return results
+
+class Routes():
+	def __init__(self):
+		L_routes = []
