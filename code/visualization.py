@@ -1,4 +1,5 @@
 # TODO implement a better visualization
+from termcolor import colored
 
 # print the circuit as a simple grid consisting of seperated layers
 def print_simple_grid(chip):
@@ -13,7 +14,7 @@ def print_simple_grid(chip):
                 elif chip.nodes.get(id).is_free:
                     print(" ",end="")
                 elif chip.nodes.get(id).is_gate:
-                    print("o",end="")
+                    print(colored("o", "red"),end="")
                 else:
                     print("-",end="")
             print("|")

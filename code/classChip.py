@@ -5,6 +5,7 @@ class Node():
 		self.coordinates = coordinates      # tuple with x, y, z coordinates
 		self.is_free = is_free              # free means not used
 		self.is_gate = False
+		self.L_neighbours = {}				# contains all neighbours (id, node)
 
 
 class Chip():
@@ -13,11 +14,16 @@ class Chip():
 		self.width = width
 		self.height = height
 		self.circuit = circuit
-		self.nodes = {}                		# contains all nodes with coord. as keys
-		self.walls = []                   	# contains all gates coord.
+		self.nodes = {}                	# contains all nodes with coord. as keys
+		self.walls = []                 # contains all gates coord.
 
-		# initiate first level of chip
-		self.init_nodes(0)
+		# initiate all levels of the chip
+		for z in range(8):
+			self.init_nodes(z)
+
+		# store all neighbours of each nodes
+		for id, node in self.nodes:
+			find_neighbours(id, node)
 
 
 	# init nodes at level z and store them in nodes
@@ -25,11 +31,22 @@ class Chip():
 		self.levels += 1
 		for x in range(self.width):
 			for y in range(self.height):
-				# TODO make a dict instead of list with tuple? coordinates as keys
 				id = str(x) + ", " + str(y) + ", " + str(z)
 				node = Node(id, (x, y, z), True)
 				self.nodes[id] = node
 
+	# stores all neighbours of each node
+	def find_neighbours(self, id, node):
+		x, y, z = node.coordinates
+		possible_neighbours = [(x+1, y, z), (x, y-1, z), (x-1, y, z),
+								(x, y+1, z), (x, y, z-1), (x, y, z+1)]
+		for neighbour in possible_neighbours:
+
+			# check for each neighbour if they exist
+			if neighbour != None:
+				id = str(neighbour[0]) + ", " + str(neighbour[1]) + ", " +
+					str(neighbour[2])
+				node.L_neighbours[id] = self.nodes[id]
 
 	# loads the chip
 	def load_chip(self):
