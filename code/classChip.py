@@ -74,6 +74,20 @@ class Chip():
 			L_y.append(gate.coordinates[1])
 		return L_x, L_y
 
+	# TODO TEMPORARY METHOD. NODES IN WALLS SHOULD BE PUT IN A PATH OBJECT,
+	# SO THAT EACH PATH CAN BE CLEARLY DISTINGUISHED IN THE VISUALIZATION PLOTS.
+	# ALSO ADD LAYERS
+	def get_walls_coordinates(self):
+		L_x, L_y, L_z = [], [], []
+		for node_id in self.walls:
+			id = str(node_id[0]) + ", " + str(node_id[1]) + ", " + str(node_id[2])
+			node = self.nodes.get(id)
+			if node.is_gate == False:
+				L_x.append(node.coordinates[0])
+				L_y.append(node.coordinates[1])
+				L_z.append(node.coordinates[2])
+		return L_x, L_y, L_z
+
 	def in_bounds(self, id):
 		(x, y, z) = id
 		return 0 <= x < self.width and 0 <= y < self.height and 0 <= z <= self.levels
