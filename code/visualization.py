@@ -1,4 +1,6 @@
 # TODO implement a better visualization
+import matplotlib.pyplot as plt
+import numpy as np
 from termcolor import colored
 
 # print the circuit as a simple grid consisting of seperated layers
@@ -18,3 +20,35 @@ def print_simple_grid(chip):
                 else:
                     print("-",end="")
             print("|")
+
+# grid representation with matplotlib
+def plot_grid(results_directory, chip, width, height):
+    x = []
+    y = []
+
+    fig, ax = plt.subplots()
+
+    x_ticks = range(width)      # set ticks to step of 1 for correct grid
+    y_ticks = range(height)     # set ticks to step of 1 for correct grid
+    ax.set_xticks(x_ticks)
+    ax.set_yticks(y_ticks)
+
+    # set all ticks and labels off
+    plt.tick_params(
+        axis='both',
+        which='both',
+        bottom=False,
+        top=False,
+        left=False,
+        right=False,
+        labelbottom=False,
+        labelleft=False)
+
+    ax.plot(x, y, 'ro')
+
+    # set correct limits and initiate grid
+    ax.set_xlim(0, width - 1)
+    ax.set_ylim(0, height - 1)
+    ax.grid(alpha=1)
+    plt.savefig(results_directory + "plot_grid.png")
+    plt.show()

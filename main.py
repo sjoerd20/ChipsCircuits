@@ -2,6 +2,7 @@
 import sys, os
 directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
+sys.path.append(os.path.join(directory, "results"))
 sys.path.append(os.path.join(directory, "code" , "algorithms"))
 
 from classChip import *
@@ -60,7 +61,8 @@ def test(circuit, width, height, netlist, algorithm, sort):
 	print()
 
 	# print grid
-	visualization.print_simple_grid(chip)
+	visualization.plot_grid(directory + "/results/", chip, width, height)
+	# visualization.print_simple_grid(chip)
 
 
 if __name__ == "__main__":
