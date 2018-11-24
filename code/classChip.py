@@ -22,6 +22,7 @@ class Chip():
 		self.nodes = {}                	# contains all nodes with coord. as keys
 		self.walls = []                 # contains all gates coord.
 		self.path = []					# list of all paths
+		self.gates = []					# list of all gates
 
 		# initiate all levels of the chip
 		for z in range(8):
@@ -62,7 +63,16 @@ class Chip():
 			self.nodes.get(id).is_free = False
 			self.nodes.get(id).is_gate = True
 			self.walls.append((cur_coordinates[0], cur_coordinates[1], 0))
+			self.gates.append(self.nodes.get(id))
 			cur_coordinates = []
+
+	# returns a list of coordinates of all gates
+	def get_gates_coordinates(self):
+		L_x, L_y = [], []
+		for gate in self.gates:
+			L_x.append(gate.coordinates[0])
+			L_y.append(gate.coordinates[1])
+		return L_x, L_y
 
 	def in_bounds(self, id):
 		(x, y, z) = id
