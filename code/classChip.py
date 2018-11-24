@@ -9,9 +9,9 @@ class Node():
 
 # holds a single path
 class Path():
-	def __init__(self, net):
+	def __init__(self, net, nodes):
 		self.net = net		# the net from the path
-		self.path = path 	# holds the nodes of the path
+		self.nodes = nodes 	# holds the nodes of the path
 
 class Chip():
 	def __init__(self, circuit, width, height):
@@ -21,7 +21,7 @@ class Chip():
 		self.circuit = circuit
 		self.nodes = {}                	# contains all nodes with coord. as keys
 		self.walls = []                 # contains all gates coord.
-		self.path = []					# list of all paths
+		self.paths = []					# list of all paths
 		self.gates = []					# list of all gates
 
 		# initiate all levels of the chip
@@ -78,15 +78,32 @@ class Chip():
 	# SO THAT EACH PATH CAN BE CLEARLY DISTINGUISHED IN THE VISUALIZATION PLOTS.
 	# ALSO ADD LAYERS
 	def get_walls_coordinates(self):
-		L_x, L_y, L_z = [], [], []
+		x, y, z = [], [], []
 		for node_id in self.walls:
 			id = str(node_id[0]) + ", " + str(node_id[1]) + ", " + str(node_id[2])
 			node = self.nodes.get(id)
 			if node.is_gate == False:
-				L_x.append(node.coordinates[0])
-				L_y.append(node.coordinates[1])
-				L_z.append(node.coordinates[2])
-		return L_x, L_y, L_z
+				x.append(node.coordinates[0])
+				y.append(node.coordinates[1])
+				z.append(node.coordinates[2])
+		return x, y, z
+
+	# returns a list with lists filled with tuples of coordinates of all paths
+	def get_all_paths_coordinates(self):
+		all_paths_coordinates = []
+		for path in self.paths:
+			path_coordinates = self.get_path_coordinates(path)
+			all_paths_coordinates.append(path_coordinates)
+		return all_paths_coordinates
+
+	# returns a list of tuples coordinates of a single path
+	def get_path_coordinates(self, path):
+		path_coordinates = []
+		for node_id in path.nodes:
+			id = str(node_id[0]) + ", " + str(node_id[1]) + ", " + str(node_id[2])
+			node = self.nodes.get(id)
+			path_coordinates.append(node.coordinates)
+		return path_coordinates
 
 	def in_bounds(self, id):
 		(x, y, z) = id

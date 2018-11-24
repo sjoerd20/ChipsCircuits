@@ -1,5 +1,6 @@
 import heapq
 from shared_functions import *
+import classChip
 
 # implements a priority queue using heapq
 class PriorityQueue():
@@ -38,10 +39,13 @@ def a_star(chip, net):
 				priority = new_cost + heuristic(goal, next)
 				queue.put(next, priority)
 				came_from[next] = current
-	prev = goal		
+	prev = goal
 	while came_from[prev] is not None:
 		shortest_path.append(came_from[prev])
 		prev = came_from[prev]
 	print(shortest_path)
 	chip.walls += shortest_path
+
+	# store path for this net in new Path object and append to chip object
+	chip.paths.append(classChip.Path(net, shortest_path))
 	return cost_so_far[goal]

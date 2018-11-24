@@ -25,22 +25,20 @@ def print_simple_grid(chip):
 def plot_grid(results_directory, chip, width, height):
 
     # get all gates
-    L_x_gates, L_y_gates = chip.get_gates_coordinates()
-    L_x_nodes_used, L_y_nodes_used, L_z_nodes_used = chip.get_walls_coordinates()
+    x_gates, y_gates = chip.get_gates_coordinates()
+    # L_x_nodes_used, L_y_nodes_used, L_z_nodes_used = chip.get_walls_coordinates()
 
-    # show grid for each level, only for level 0 gates are printed
-    plot_grid_level(results_directory, width, height, L_x_nodes_used,
-                    L_y_nodes_used, L_x_gates, L_y_gates)
-    for level in range(1, chip.levels):
-        plot_grid_level(results_directory, width, height, L_x_nodes_used,
-                        L_y_nodes_used, level=level)
+    all_paths_coordinates = chip.get_all_paths_coordinates()
 
-    # plt.show()
+    # print gates at grid layer 0
+    plot_grid_level(results_directory, width, height, x_gates=x_gates, y_gates=y_gates)
+
+    plt.show()
     return
 
 # plot single grid layer
-def plot_grid_level(results_directory, width, height, L_x_nodes_used,
-                    L_y_nodes_used, L_x_gates=None, L_y_gates=None, level=0):
+def plot_grid_level(results_directory, width, height, x_nodes_used=None,
+                    y_nodes_used=None, x_gates=None, y_gates=None, level=0):
     fig, ax = plt.subplots()
     x_ticks = range(width)      # set ticks to step of 1 for correct grid
     y_ticks = range(height)     # set ticks to step of 1 for correct grid
@@ -58,9 +56,10 @@ def plot_grid_level(results_directory, width, height, L_x_nodes_used,
         labelbottom=False,
         labelleft=False)
 
-    if (L_x_gates and L_y_gates) != None:
-        ax.plot(L_x_gates, L_y_gates, 'ro')
-    ax.plot(L_x_nodes_used, L_y_nodes_used, 'bo')
+    if (x_gates and y_gates) != None:
+        ax.plot(x_gates, y_gates, 'ro')
+    if (x_nodes_used and y_nodes_used) != None:
+        ax.plot(x_nodes_used, y_nodes_used, 'bo')
 
     # set correct limits and initiate grid
     ax.set_xlim(0, width - 1)
