@@ -39,7 +39,7 @@ def plot_grid(results_directory, chip, width, height):
             plot_grid_level(results_directory, width, height,
                             all_paths_coordinates=all_paths_coordinates,
                             level=level)
-            
+
     # print gates at grid layer 0
     # plot_grid_level(results_directory, width, height, x_gates=x_gates, y_gates=y_gates)
 
@@ -50,8 +50,10 @@ def plot_grid(results_directory, chip, width, height):
 def plot_grid_level(results_directory, width, height, all_paths_coordinates=None,
                     x_gates=None, y_gates=None, level=0):
 
-    colors = ["bo-", "go-", "co-", "mo-", "yo-"]
+    colors = ["b", "g", "c", "m", "y"]
+    markers = [".", "^", ",", "v", "<", ">"]
     color_index = 0
+    marker_index = 0
 
     fig, ax = plt.subplots()
     x_ticks = range(width)      # set ticks to step of 1 for correct grid
@@ -80,17 +82,19 @@ def plot_grid_level(results_directory, width, height, all_paths_coordinates=None
                             prev_path_node_coordinate[0]],
                             [path_node_coordinate[1],
                             prev_path_node_coordinate[1]],
-                            colors[color_index])
+                            color=colors[color_index],
+                            marker=markers[marker_index])
                 prev_path_node_coordinate = path_node_coordinate
             color_index = (color_index + 1) % len(colors)
+            marker_index = (marker_index + 1) % len(markers)
 
     # plot gates if provided
     if (x_gates and y_gates) != None:
         ax.plot(x_gates, y_gates, 'ro')
 
     # set correct limits and initiate grid
-    ax.set_xlim(0, width - 1)
-    ax.set_ylim(0, height - 1)
+    ax.set_xlim(-1, width)
+    ax.set_ylim(-1, height)
     plt.gca().invert_yaxis()        # invert the y-axis to get correct view
     ax.grid(alpha=1)
     plt.savefig(results_directory + "/plot_grid/plot_grid" + str(level) + ".png")
