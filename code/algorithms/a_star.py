@@ -40,6 +40,7 @@ def a_star(chip, net):
 				queue.put(next, priority)
 				came_from[next] = current
 	prev = goal
+	shortest_path.append(goal)
 	while came_from[prev] is not None:
 		shortest_path.append(came_from[prev])
 		prev = came_from[prev]
