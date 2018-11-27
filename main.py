@@ -20,11 +20,10 @@ def main():
 	netlists = load_data(directory + "/data/netlists.txt")
 
 	circuit = circuits.circuit_0
-	netlist = netlists.netlist_1[:10]
+	netlist = netlists.netlist_1
 	algorithm = a_star
 
-	netlist.sort(key=lambda net: area(circuit[net[0]], circuit[net[1]]))
-	test(circuit, 18, 13, netlist, algorithm, "unsorted")
+	test(circuit, 18, 13, netlist, algorithm)
 
 	"""
 
@@ -44,24 +43,31 @@ def main():
 
 
 # to test with certain circuits and netlists
-def test(circuit, width, height, netlist, algorithm, sort):
+def test(circuit, width, height, netlist, algorithm):
 	print(algorithm.__name__)
 	print("circuit of length", width, "and height", height)
 	print(netlist)
 
 	cost = 0
-	chip = Chip(circuit, width, height)
-	chip.load_chip()
-	for net in netlist:
-		print((net[0], net[1]))
-		cost += algorithm(chip, net)
-	print("Total cost, " + sort + " =", cost)
+	while cost == 0:
+		chip = Chip(circuit, width, height)
+		chip.load_chip()
+		for net in netlist:
+			try:
+				cost += algorithm(chip, net)
+			except TypeError:
+				print(netlist)
+				netlist.remove(net)
+				netlist.insert(0, net)
+				cost = 0
+				break
+	print("Total cost =", cost)
 
 	print("Lower bound =", lower_bound(circuit, netlist))
 	print()
 
 	# print grid
-	visualization.plot_grid(directory + "/results/", chip, width, height)
+	visualization.plot_grid(directory + "/results", chip, width, height)
 	# visualization.print_simple_grid(chip)
 
 
