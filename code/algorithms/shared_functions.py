@@ -18,6 +18,5 @@ def lower_bound(circuit, netlist):
 	return lower_bound
 
 # smallest upper bound
-def upper_bound(circuit, netlist):
-  	# TODO
-	return upper_bound
+def upper_bound(chip, circuit, netlist):
+	return chip.width * chip.height * chip.max_levels - len(circuit)

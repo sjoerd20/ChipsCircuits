@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from termcolor import colored
 
+
 # print the circuit as a simple grid consisting of seperated layers
 def print_simple_grid(chip):
     for z in range(chip.levels):
@@ -24,27 +25,40 @@ def print_simple_grid(chip):
 # grid representation with matplotlib
 def plot_grid(results_directory, chip, width, height):
 
-    # get all gates
-    x_gates, y_gates = chip.get_gates_coordinates()
-    # L_x_nodes_used, L_y_nodes_used, L_z_nodes_used = chip.get_walls_coordinates()
+	# get all gates
+	x_gates, y_gates = chip.get_gates_coordinates()
+	# L_x_nodes_used, L_y_nodes_used, L_z_nodes_used = chip.get_walls_coordinates()
 
-    all_paths_coordinates = chip.get_all_paths_coordinates()
+	all_paths_coordinates = chip.get_all_paths_coordinates()
 
-    for level in range(chip.levels):
-        if level == 0:
-            plot_grid_level(results_directory, width, height,
-                            all_paths_coordinates=all_paths_coordinates,
-                            x_gates=x_gates, y_gates=y_gates)
-        else:
-            plot_grid_level(results_directory, width, height,
-                            all_paths_coordinates=all_paths_coordinates,
-                            level=level)
+	for level in range(chip.levels):
+		if level == 0:
+			plot_grid_level(results_directory, width, height,
+							all_paths_coordinates=all_paths_coordinates,
+							x_gates=x_gates, y_gates=y_gates)
+		else:
+			plot_grid_level(results_directory, width, height,
+							all_paths_coordinates=all_paths_coordinates,
+							level=level)
 
-    # print gates at grid layer 0
-    # plot_grid_level(results_directory, width, height, x_gates=x_gates, y_gates=y_gates)
+	# print gates at grid layer 0
+	# plot_grid_level(results_directory, width, height, x_gates=x_gates, y_gates=y_gates)
 
-    plt.show()
-    return
+	plt.show()
+	return
+
+def plot_3D(results_directory, width, height, levels, all_paths_coordinates=None,
+                    x_gates=None, y_gates=None):
+
+	if all_paths_coordinates != None:
+		xs = [point[0] for path_coordinates in all_paths_coordinates for point in path_coordinates]
+		ys = [point[1] for path_coordinates in all_paths_coordinates for point in path_coordinates]
+		zs = [point[2] for path_coordinates in all_paths_coordinates for point in path_coordinates]
+	
+	fig = plt.figure()
+	ax = fig.gca(projection='3d')
+	ax.scatter(xs, ys, zs)
+	plt.savefig(results_directory + "/plot_grid/plot_3D.png")
 
 # plot single grid layer
 def plot_grid_level(results_directory, width, height, all_paths_coordinates=None,

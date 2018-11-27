@@ -16,6 +16,7 @@ class Path():
 class Chip():
 	def __init__(self, circuit, width, height):
 		self.levels = 0
+		self.max_levels = 8
 		self.width = width
 		self.height = height
 		self.circuit = circuit
@@ -25,7 +26,7 @@ class Chip():
 		self.gates = []					# list of all gates
 
 		# initiate all levels of the chip
-		for z in range(8):
+		for z in range(self.max_levels):
 			self.init_nodes(z)
 
 		# store all neighbours of each nodes
@@ -107,7 +108,7 @@ class Chip():
 
 	def in_bounds(self, id):
 		(x, y, z) = id
-		return 0 <= x < self.width and 0 <= y < self.height and 0 <= z <= self.levels
+		return 0 <= x < self.width and 0 <= y < self.height and 0 <= z < self.levels
 
 	def passable(self, id):
 		return id not in self.walls

@@ -9,6 +9,7 @@ from classChip import *
 from load_data import load_data
 from a_star import *
 from greedy import *
+from genetic import *
 import visualization
 
 def main():
@@ -20,12 +21,16 @@ def main():
 	netlists = load_data(directory + "/data/netlists.txt")
 
 	circuit = circuits.circuit_0
-	netlist = netlists.netlist_1
+	netlist = netlists.netlist_1[:20]
 	algorithm = a_star
+
 
 	test(circuit, 18, 13, netlist, algorithm)
 
+
+
 	"""
+	test(circuit, 18, 13, netlist, algorithm)
 
 	netlist.sort(key=lambda net: distance(circuit[net[0]], circuit[net[1]]))
 	test(circuit, 18, 13, netlist, algorithm, "sorted by distance")
@@ -44,24 +49,24 @@ def main():
 
 # to test with certain circuits and netlists
 def test(circuit, width, height, netlist, algorithm):
-	print(algorithm.__name__)
+	new_index = 0
 	print("circuit of length", width, "and height", height)
-	print(netlist)
+	print("Upper bound (worst case) =", upper_bound(Chip(circuit, width, height), circuit, netlist))
 
 	cost = 0
 	while cost == 0:
 		chip = Chip(circuit, width, height)
 		chip.load_chip()
-		for net in netlist:
+		for index, net in enumerate(netlist):
 			try:
 				cost += algorithm(chip, net)
 			except TypeError:
-				print(netlist)
-				netlist.remove(net)
-				netlist.insert(0, net)
 				cost = 0
+				print(index)
+				netlist.insert(new_index % len(netlist), netlist.pop(index))
+				new_index += 1
 				break
-	print("Total cost =", cost)
+	print("Total cost", algorithm.__name__, " = ", cost)
 
 	print("Lower bound =", lower_bound(circuit, netlist))
 	print()

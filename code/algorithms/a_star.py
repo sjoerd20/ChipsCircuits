@@ -38,6 +38,9 @@ def a_star(chip, net):
 				if next not in cost_so_far or new_cost < cost_so_far[next]:
 					cost_so_far[next] = new_cost
 					priority = new_cost + heuristic(goal, next)
+					for nearby in chip.neighbors(next, goal):
+						if nearby in chip.gates:
+							priority += 5
 					queue.put(next, priority)
 					came_from[next] = current
 
