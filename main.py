@@ -72,6 +72,7 @@ def test(circuit, width, height, netlist, algorithm):
 	print()
 
 	# print grid
+	visualization.plot_3D(directory + "/results", chip, width, height)
 	visualization.plot_grid(directory + "/results", chip, width, height)
 	# visualization.print_simple_grid(chip)
 
