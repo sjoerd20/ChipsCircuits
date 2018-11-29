@@ -6,6 +6,13 @@ def distance(coords_a, coords_b):
 def heuristic(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1]) + abs(coords_a[2] - coords_b[2])
 
+def gate_density(chip, coordinates):
+	dist = 0
+	for gate in chip.gates:
+		if heuristic(gate.coordinates, coordinates) < 4:
+			dist += 1
+	return dist
+
 # delta x * delta y, POSSIBLY an improvement; does the simplest/most straight paths first
 def area(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) * abs(coords_a[1] - coords_b[1])
