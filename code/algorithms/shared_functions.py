@@ -2,7 +2,7 @@
 
 def distance(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1])
-
+	
 def heuristic(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1]) + abs(coords_a[2] - coords_b[2])
 

@@ -9,7 +9,7 @@ def fitness(chip, netlist, algorithm):
 	for index, net in enumerate(netlist):
 		try:
 			cost += algorithm(chip, net)
-		except TypeError:
+		except KeyError:
 			return(index)
 	return(cost)
 
@@ -23,12 +23,10 @@ def initial_pop(size, circuit, width, height, algorithm, netlist):
 	population.sort(key = lambda netlist : netlist[1], reverse = True)
 	return population
 
-def selection(population, sample, mutations):
+def selection(population, sample):
 	parents = []
 	for i in range(sample):
 		parents.append(population[i][0])
-	for i in range(mutations):
-		parents.append(choice(population)[0])
 	shuffle(parents)
 	return parents
 
@@ -51,3 +49,13 @@ def next_pop(size, circuit, width, height, algorithm, parents):
 			population.append((child, fitness(chip, child, algorithm)))
 	population.sort(key = lambda child : child[1], reverse = True)
 	return population
+
+def mutate(individual):
+	ids = range(len(individual))
+	a, b = sample(ids, 2)
+	individual[a], individual[b] = individual[b], individual[a]
+
+def mutate_pop(population, mutation_rate):
+	for individual in population:
+		if random() < mutation_rate:
+			mutate(individual[0])

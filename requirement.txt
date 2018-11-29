@@ -1,6 +1,4 @@
 imp
 heapq
 matplotlib
-mpl_toolkits
 termcolor
-numpy

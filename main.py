@@ -21,13 +21,11 @@ def main():
 	netlists = load_data(directory + "/data/netlists.txt")
 
 	circuit = circuits.circuit_0
-	netlist = netlists.netlist_1[:20]
+	netlist = netlists.netlist_1
+	population_size, width, height = 20, 18, 13
 	algorithm = a_star
 
-
-	test(circuit, 18, 13, netlist, algorithm)
-
-
+	test(circuit, width, height, netlist, algorithm)
 
 	"""
 	test(circuit, 18, 13, netlist, algorithm)
@@ -42,6 +40,14 @@ def main():
 	area(circuit[net[0]], circuit[net[1]])])
 	test(circuit, 18, 13, netlist, algorithm, "sorted by distance, then by area")
 
+	population = initial_pop(population_size, circuit, width, height, algorithm, netlist)
+	while population[0][1] < len(netlist):
+		print(population[0][1], population[-1][1])
+		mutate_pop(population, 0.05)
+		parents = selection(population, 5)
+		population = next_pop(10, circuit, width, height, algorithm, parents)
+	netlist = population[0][0]
+
 	"""
 
 	return
@@ -50,6 +56,7 @@ def main():
 # to test with certain circuits and netlists
 def test(circuit, width, height, netlist, algorithm):
 	new_index = 0
+	max_index = 0
 	print("circuit of length", width, "and height", height)
 	print("Upper bound (worst case) =", upper_bound(Chip(circuit, width, height), circuit, netlist))
 
@@ -60,21 +67,15 @@ def test(circuit, width, height, netlist, algorithm):
 		for index, net in enumerate(netlist):
 			try:
 				cost += algorithm(chip, net)
-			except TypeError:
-				cost = 0
-				print(index)
-				netlist.insert(new_index % len(netlist), netlist.pop(index))
-				new_index += 1
+			except KeyError:
 				break
 	print("Total cost", algorithm.__name__, " = ", cost)
 
 	print("Lower bound =", lower_bound(circuit, netlist))
 	print()
 
-	# print grid
 	visualization.plot_3D(directory + "/results", chip, width, height)
 	visualization.plot_grid(directory + "/results", chip, width, height)
-	# visualization.print_simple_grid(chip)
 
 
 if __name__ == "__main__":
