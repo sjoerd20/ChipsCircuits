@@ -20,15 +20,25 @@ def main():
 	circuits = load_data(directory + "/data/circuits.txt")
 	netlists = load_data(directory + "/data/netlists.txt")
 
-	circuit = circuits.circuit_0
-	netlist = netlists.netlist_1
-	population_size, width, height = 20, 18, 13
+	circuit = circuits.circuit_1
+	netlist = netlists.netlist_6
 	algorithm = a_star
+	population_size, width, height = 14, 18, 17
+
+	print("Upper bound (worst case) = ", upper_bound(Chip(circuit, width, height)))
+
+	population = initial_pop(population_size, circuit, width, height, algorithm, netlist)
+	while population[0][1] < len(netlist):
+		parents = selection(population, 5)
+		population = next_pop(7, circuit, width, height, algorithm, parents)
+	netlist = population[0][0]
 
 	test(circuit, width, height, netlist, algorithm)
+	test(circuit, width, height, netlist, greedy)
+
+	print("Lower bound =", lower_bound(circuit, netlist))
 
 	"""
-	test(circuit, 18, 13, netlist, algorithm)
 
 	netlist.sort(key=lambda net: distance(circuit[net[0]], circuit[net[1]]))
 	test(circuit, 18, 13, netlist, algorithm, "sorted by distance")
@@ -43,10 +53,9 @@ def main():
 	population = initial_pop(population_size, circuit, width, height, algorithm, netlist)
 	while population[0][1] < len(netlist):
 		print(population[0][1], population[-1][1])
-		mutate_pop(population, 0.05)
 		parents = selection(population, 5)
-		population = next_pop(10, circuit, width, height, algorithm, parents)
-	netlist = population[0][0]
+		population = next_pop(7, circuit, width, height, algorithm, parents)
+	print(population[0])
 
 	"""
 
@@ -55,27 +64,22 @@ def main():
 
 # to test with certain circuits and netlists
 def test(circuit, width, height, netlist, algorithm):
-	new_index = 0
-	max_index = 0
-	print("circuit of length", width, "and height", height)
-	print("Upper bound (worst case) =", upper_bound(Chip(circuit, width, height), circuit, netlist))
-
+	print(algorithm.__name__)
 	cost = 0
 	while cost == 0:
 		chip = Chip(circuit, width, height)
 		chip.load_chip()
-		for index, net in enumerate(netlist):
+		for net in netlist:
 			try:
 				cost += algorithm(chip, net)
 			except KeyError:
+				cost = 0
 				break
-	print("Total cost", algorithm.__name__, " = ", cost)
+	print("Total cost =", cost)
 
-	print("Lower bound =", lower_bound(circuit, netlist))
-	print()
-
-	visualization.plot_3D(directory + "/results", chip, width, height)
+	# print grid
 	visualization.plot_grid(directory + "/results", chip, width, height)
+	# visualization.print_simple_grid(chip)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import heapq
 from shared_functions import *
 import classChip
+from random import *
 
 # implements a priority queue using heapq
 class PriorityQueue():
@@ -18,11 +19,15 @@ class PriorityQueue():
 
 
 def a_star(chip, net):
-	start, goal = chip.circuit[net[0]] + (0,), chip.circuit[net[1]] + (0,)
+	start_layer = int(random() * 8)
+	for i in range(start_layer):
+		chip.walls.append(chip.circuit[net[0]] + (i,))
+		chip.walls.append(chip.circuit[net[1]] + (i,))
+	start, goal = chip.circuit[net[0]] + (start_layer,), chip.circuit[net[1]] + (start_layer,)
 	queue = PriorityQueue()
 	queue.put(start, 0)
 	came_from, cost_so_far = {}, {}
-	came_from[start], cost_so_far[start] = None, 0
+	came_from[start], cost_so_far[start] = None, 2 * start_layer
 	shortest_path = []
 
 	while not queue.empty():
