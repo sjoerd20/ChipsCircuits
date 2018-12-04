@@ -1,29 +1,41 @@
-# class chips & circuits
+"""
+By: Ivo de Brouwer & Sjoerd Terpstra
+
+This file contains the datastructure of the project. The class Chip contains
+all nodes present in the Chip.
+
+In the Node class all information (id, coordinates, is_fee, is_gate,
+list of neighbours) of a single node is stored.
+
+The class Path holds all visited nodes of a single path of a net
+
+"""
+
 class Node():
 	def __init__(self, id, coordinates, is_free):
-		self.id = id                        # id xyz
+		self.id = id                        # id string xyz
 		self.coordinates = coordinates      # tuple with x, y, z coordinates
-		self.is_free = is_free              # free means not used
-		self.is_gate = False
+		self.is_free = is_free              # if node is used
+		self.is_gate = False				# true if node is gate, else false
 		self.L_neighbours = {}				# contains all neighbours (id, node)
 
-# holds a single path
+
 class Path():
 	def __init__(self, net, nodes):
-		self.net = net		# the net from the path
-		self.nodes = nodes 	# holds the nodes of the path
+		self.net = net						# the net from the path
+		self.nodes = nodes 					# holds the nodes of the path
 
 class Chip():
 	def __init__(self, circuit, width, height):
-		self.levels = 0
-		self.max_levels = 8
-		self.width = width
-		self.height = height
-		self.circuit = circuit
+		self.levels = 0					# amount of layers of chip
+		self.max_levels = 8				# maximum amount of layers
+		self.width = width				# width of chip
+		self.height = height			# height of chip
+		self.circuit = circuit			# list of all gates
 		self.nodes = {}                	# contains all nodes with coord. as keys
-		self.walls = []                 # contains all gates coord.
-		self.paths = []					# list of all paths
-		self.gates = []					# list of all gates
+		self.walls = []                 # contains all used nodes
+		self.paths = []					# list of all Path objects
+		self.gates = []					# list of all gate id's
 
 		# initiate all levels of the chip
 		for z in range(self.max_levels):
