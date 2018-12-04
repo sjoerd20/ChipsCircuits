@@ -34,9 +34,15 @@ def create_child(parent_a, parent_b):
 	child = []
 	for i in range(len(parent_a)):
 		if random() < 0.5:
-			child.append(parent_a[i])
+			if parent_a[i] not in child:
+				child.append(parent_a[i])
+			else:
+				child.append(parent_b[i])
 		else:
-			child.append(parent_b[i])
+			if parent_b[i] not in child:
+				child.append(parent_b[i])
+			else:
+				child.append(parent_a[i])
 	return child
 
 def next_pop(size, circuit, width, height, algorithm, parents):
