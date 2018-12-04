@@ -30,22 +30,36 @@ def selection(population, sample):
 	shuffle(parents)
 	return parents
 
-def create_child(parent_a, parent_b):
-	child = []
+# def create_child(parent_a, parent_b, netlist):
+# 	child = []
+# 	for i in range(len(parent_a)):
+# 		if random() < 0.5:
+# 			child.append(parent_a[i])
+# 		else:
+# 			child.append(parent_b[i])
+# 	return child
+
+def create_child(parent_a, parent_b, netlist):
+	temp_netlist = [netlist[i] for i in range(len(netlist))]
+	child = [0 for i in range(len(parent_a))]
 	for i in range(len(parent_a)):
-		if random() < 0.5:
-			child.append(parent_a[i])
-		else:
-			child.append(parent_b[i])
+		if (parent_a[i] == parent_b[i]):
+			child[i] = parent_a[i]
+			temp_netlist.remove(parent_a[i])
+	for i in range(len(child)):
+		if (len(netlist) > 0):
+			if child[i] == 0:
+				child[i] = choice(temp_netlist)
+				temp_netlist.remove(child[i])
 	return child
 
-def next_pop(size, circuit, width, height, algorithm, parents):
+def next_pop(population_size, circuit, width, height, algorithm, parents, netlist):
 	population = []
 	for i in range(len(parents) // 2):
 		for j in range(size):
 			chip = Chip(circuit, width, height)
 			chip.load_chip()
-			child = create_child(parents[i], parents[len(parents) - 1 - i])
+			child = create_child(parents[i], parents[len(parents) - 1 - i], netlist)
 			population.append((child, fitness(chip, child, algorithm)))
 	population.sort(key = lambda child : child[1], reverse = True)
 	return population

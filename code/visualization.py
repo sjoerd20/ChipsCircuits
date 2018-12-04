@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
+from termcolor import colored
 
 
 # print the circuit as a simple grid consisting of seperated layers
@@ -29,7 +30,7 @@ def plot_grid(results_directory, chip, width, height):
 	x_gates, y_gates = chip.get_gates_coordinates()
 	all_paths_coordinates = chip.get_all_paths_coordinates()
 
-	for level in range(chip.levels):
+	for level in range(4):
 		if level == 0:
 			plot_grid_level(results_directory, width, height,
 							all_paths_coordinates=all_paths_coordinates,
@@ -52,7 +53,9 @@ def plot_3D(results_directory, chip, width, height):
     all_paths_coordinates = chip.get_all_paths_coordinates()
 
     colors = ["b", "g", "c", "m", "y"]
+    #colors = ["k"]
     markers = [".", "^", ",", "v", "<", ">"]
+    markers = [""]
     color_index = 0
     marker_index = 0
 
@@ -65,12 +68,13 @@ def plot_3D(results_directory, chip, width, height):
     z_ticks = range(chip.levels)
     ax.set_xticks(x_ticks)
     ax.set_yticks(y_ticks)
+    ax.set_zticks(z_ticks)
 
     # set all ticks and labels off
     plt.tick_params(
         axis="both",
         which="both",
-        bottom=False,
+        bottom=True,
         top=False,
         left=False,
         right=False,
@@ -94,21 +98,27 @@ def plot_3D(results_directory, chip, width, height):
             color_index = (color_index + 1) % len(colors)
             marker_index = (marker_index + 1) % len(markers)
 
-    	# xs = [point[0] for path_coordinates in all_paths_coordinates for point in path_coordinates]
-    	# ys = [point[1] for path_coordinates in all_paths_coordinates for point in path_coordinates]
-    	# zs = [point[2] for path_coordinates in all_paths_coordinates for point in path_coordinates]
-
     # plot gates if provided
     if (x_gates and y_gates) != None:
         ax.plot(x_gates, y_gates, [0 for i in range(len(x_gates))], 'ro', markersize=10)
 
     # ax.scatter(xs, ys, zs)
     # set correct limits and initiate grid
-    ax.set_xlim(-1, width)
-    ax.set_ylim(-1, height)
-    ax.set_zlim(-1, chip.levels)
+    plt.title("3D representation of the chip (25 gates) filled with " +
+                str(len(all_paths_coordinates)) + " nets")
+    ax.set_xlim(0, width)
+    ax.set_ylim(0, height)
+    ax.set_zlim(0, chip.levels)
+    # plt.gca().invert_xaxis()
     plt.gca().invert_yaxis()        # invert the y-axis to get correct view
-    ax.set_axis_off()
+    # ax.set_axis_off()
+
+    # make the x and y panes transparant
+    ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+    ax.yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+    ax.xaxis._axinfo["grid"]['color'] =  (1,1,1,0)
+    ax.yaxis._axinfo["grid"]['color'] =  (1,1,1,0)
+
     plt.savefig(results_directory + "/plot_grid/plot_3D.png")
     plt.show()
 
@@ -159,6 +169,7 @@ def plot_grid_level(results_directory, width, height, all_paths_coordinates=None
         ax.plot(x_gates, y_gates, 'ro')
 
     # set correct limits and initiate grid
+    plt.title("Chip level " + str(level))
     ax.set_xlim(-1, width)
     ax.set_ylim(-1, height)
     plt.gca().invert_yaxis()        # invert the y-axis to get correct view
@@ -166,3 +177,30 @@ def plot_grid_level(results_directory, width, height, all_paths_coordinates=None
     plt.savefig(results_directory + "/plot_grid/plot_grid" + str(level) + ".png")
 
     return
+
+def plot_bounds(results_directory):
+    lower_bounds_small = [291, 341, 475]
+    lower_bounds_small_x = [30, 40, 50]
+    lower_bounds_large = [600, 578, 761]
+    lower_bounds_large_x = [50, 60, 70]
+
+    fig, ax = plt.subplots(nrows=1, ncols=2)
+    bounds_small = ax[0].bar(lower_bounds_small_x, lower_bounds_small, align='center', width=10, edgecolor='k')
+    bounds_large = ax[1].bar(lower_bounds_large_x, lower_bounds_large, align='center', width=10, edgecolor='k')
+
+    # n_groups = 3
+    # index = np.arange(n_groups)
+    # bar_width = 1
+
+    for axes in ax:
+        axes.set_xlabel('lengte netlists')
+        axes.set_ylabel('kosten')
+        axes.set_ylim(0,800)
+    ax[0].set_title("Lower bounds for chip with 25 gates")
+    ax[1].set_title("Lower bounds for chip with 50 gates")
+    # ax[0].set_xticklabels((30, 40, 50))
+    # ax[1].set_xticklabels((50, 60, 70))
+
+    fig.tight_layout()
+    plt.savefig(results_directory + "lowerbounds.png")
+    plt.show()
