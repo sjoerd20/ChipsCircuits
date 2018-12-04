@@ -43,6 +43,7 @@ def create_child(parent_a, parent_b, netlist):
 	temp_netlist = [netlist[i] for i in range(len(netlist))]
 	child = [0 for i in range(len(parent_a))]
 	for i in range(len(parent_a)):
+<<<<<<< HEAD
 		if (parent_a[i] == parent_b[i]):
 			child[i] = parent_a[i]
 			temp_netlist.remove(parent_a[i])
@@ -51,6 +52,18 @@ def create_child(parent_a, parent_b, netlist):
 			if child[i] == 0:
 				child[i] = choice(temp_netlist)
 				temp_netlist.remove(child[i])
+=======
+		if random() < 0.5:
+			if parent_a[i] not in child:
+				child.append(parent_a[i])
+			else:
+				child.append(parent_b[i])
+		else:
+			if parent_b[i] not in child:
+				child.append(parent_b[i])
+			else:
+				child.append(parent_a[i])
+>>>>>>> c017237c3e7d32ec879a6ce35c1799565dde61c1
 	return child
 
 def next_pop(population_size, circuit, width, height, algorithm, parents, netlist):
