@@ -20,71 +20,40 @@ def main():
 	circuits = load_data(directory + "/data/circuits.txt")
 	netlists = load_data(directory + "/data/netlists.txt")
 
-	circuit = circuits.circuit_0
-	netlist = netlists.netlist_1
+	circuit = circuits.circuit_1
+	netlist = netlists.netlist_6
 	algorithm = a_star
-	population_size, width, height = 40, 18, 13
+	population_size = 20
+	width, height = 18, 17
 
 	print("Upper bound (worst case) = ", upper_bound(Chip(circuit, width, height)))
 
-	# print("Lower bound =", lower_bound(circuit, netlist))
+	# make netlist with genetic algorithm
+	netlist, total_cost = make_netlist(population_size, circuit, width, height, algorithm, netlist)
+	print("Total cost = ", total_cost)
 
-	"""
-
-	netlist.sort(key=lambda net: distance(circuit[net[0]], circuit[net[1]]))
-	test(circuit, 18, 13, netlist, algorithm, "sorted by distance")
-
-	netlist.sort(key=lambda net: area(circuit[net[0]], circuit[net[1]]))
-	test(circuit, 18, 13, netlist, algorithm, "sorted by area")
-
-	netlist.sort(key=lambda net: [distance(circuit[net[0]], circuit[net[1]]),
-	area(circuit[net[0]], circuit[net[1]])])
-	test(circuit, 18, 13, netlist, algorithm, "sorted by distance, then by area")
-
-	"""
-
-	population = initial_pop(population_size, circuit, width, height, algorithm, netlist)
-	while population[0][1] < len(netlist):
-		print(population[0][1], population[-1][1])
-		parents = selection(population, 8)
-		population = next_pop(7, circuit, width, height, algorithm, parents, netlist)
-		mutate_pop(population, 0.1)
-	print(population[0])
-
-	test(circuit, width, height, netlist, algorithm)
-	# test(circuit, width, height, netlist, greedy)
+	print("Lower bound = ", lower_bound(circuit, netlist))
 
 	return
 
-
-# to test with certain circuits and netlists
-def test(circuit, width, height, netlist, algorithm):
+def test_algorithm(circuit, width, height, netlist, algorithm):
 	print(algorithm.__name__)
 	cost = 0
-	new_index = 0
-	max_index = 0
-	print("circuit of length", width, "and height", height)
-	print("Upper bound (worst case) =", upper_bound(Chip(circuit, width, height)))
-
 	while cost == 0:
 		chip = Chip(circuit, width, height)
 		chip.load_chip()
 		for net in netlist:
 			try:
-				cost += algorithm(chip, net)
+				cost += algorithm(chip, net, int(random() * 8))
 			except KeyError:
 				cost = 0
 				break
 	print("Total cost", algorithm.__name__, " = ", cost)
 
-	print("Lower bound =", lower_bound(circuit, netlist))
-	print()
-
 	# print grid
 	visualization.plot_3D(directory + "/results", chip, width, height)
 	# visualization.plot_grid(directory + "/results", chip, width, height)
 	# visualization.print_simple_grid(chip)
-
 
 if __name__ == "__main__":
 	main()

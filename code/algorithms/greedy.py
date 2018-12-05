@@ -17,12 +17,12 @@ def move(coordinates, chip):
 			chip.init_nodes(z)
 		chip.nodes.get(id).is_free = False
 
-def greedy(chip, net):
+def greedy(chip, net, start_layer = 0):
 	net_cost = 0
 	global x, y, z
 	x = chip.circuit[net[0]][0]
 	y = chip.circuit[net[0]][1]
-	z = 0
+	z = start_layer
 	end_x = chip.circuit[net[1]][0]
 	end_y = chip.circuit[net[1]][1]
 

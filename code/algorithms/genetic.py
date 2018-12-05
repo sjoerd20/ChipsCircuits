@@ -8,10 +8,10 @@ def fitness(chip, netlist, algorithm):
 	cost = 0
 	for index, net in enumerate(netlist):
 		try:
-			cost += algorithm(chip, net)
+			cost += algorithm(chip, net, int(random() * 8))
 		except KeyError:
 			return(index)
-	return(cost)
+	return upper_bound(chip) - cost
 
 def initial_pop(size, circuit, width, height, algorithm, netlist):
 	population = []
@@ -30,15 +30,6 @@ def selection(population, sample):
 	shuffle(parents)
 	return parents
 
-# def create_child(parent_a, parent_b, netlist):
-# 	child = []
-# 	for i in range(len(parent_a)):
-# 		if random() < 0.5:
-# 			child.append(parent_a[i])
-# 		else:
-# 			child.append(parent_b[i])
-# 	return child
-
 def create_child(parent_a, parent_b, netlist):
 	temp_netlist = [netlist[i] for i in range(len(netlist))]
 	child = [0 for i in range(len(parent_a))]
@@ -56,7 +47,7 @@ def create_child(parent_a, parent_b, netlist):
 def next_pop(population_size, circuit, width, height, algorithm, parents, netlist):
 	population = []
 	for i in range(len(parents) // 2):
-		for j in range(size):
+		for j in range(population_size):
 			chip = Chip(circuit, width, height)
 			chip.load_chip()
 			child = create_child(parents[i], parents[len(parents) - 1 - i], netlist)
@@ -73,3 +64,11 @@ def mutate_pop(population, mutation_rate):
 	for individual in population:
 		if random() < mutation_rate:
 			mutate(individual[0])
+
+def make_netlist(population_size, circuit, width, height, algorithm, netlist):
+	population = initial_pop(population_size, circuit, width, height, algorithm, netlist)
+	while population[0][1] < len(netlist):
+		parents = selection(population, 5)
+		population = next_pop(population_size // 5 + 1, circuit, width, height, algorithm, parents, netlist)
+		mutate_pop(population, 0.1)
+	return population[0][0], population[0][1]
