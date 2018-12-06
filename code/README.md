@@ -26,22 +26,26 @@ Dit bestand bevat de code voor alle visualizaties van het probleem en de oplossi
 
 ## Algorithms
 
-### Greedy algoritme (greedy.py)
-
-Een deterministisch algoritme dat direct van gate naar gate probeert te gaan, en simpelweg omhoog of omlaag gaat als het niet verder kan op dezelfde laag. 
-
-Dit algoritme werkt met alle 6 netlists, met een relatief hoge kost.
-
-### A* algoritme (a_star.py)
-
-A* is een deterministisch algoritme. Dit algorimte vindt altijd het kortste pad tussen twee punten. 
-Echter loopt deze vast, zelfs bij de kleine netlists, omdat een gate bijvoorbeeld geen buren meer heeft.
+We gebruiken twee pathfinding algoritmes: greedy en A*.
+Beide algoritmen zijn deterministisch, maar deze lopen vast bij grotere netlists, omdat een gate bijvoorbeeld geen buren meer heeft.
 
 Hiervoor hebben we twee oplossingen, die beiden een niet-deterministische oplossing verkrijgen:
 * Het gebruik van een genetisch algoritme om de netlist te sorteren, zodat A* wél werkt
 * Elke net eerst naar een willekeurige laag van de chip te sturen, om de dichtheid van nets te verminderen
 
-Hierdoor werkt A* met alle 6 netlists, en met een lagere kost dan het greedy algoritme.
+### Greedy algoritme (greedy.py)
+
+Een algoritme dat direct van gate naar gate probeert te gaan, en simpelweg omhoog of omlaag gaat als het niet verder kan op dezelfde laag. 
+
+Dit algoritme werkt met alle 6 netlists, met een relatief hoge kost.
+Met gebruik van het genetisch algoritme om de netlist te sorteren, of de random layer methode, kan de kost verlaagd worden.
+
+### A* algoritme (a_star.py)
+
+A* is een algorimte dat altijd het kortste pad tussen twee punten vindt. 
+
+A* werkt zonder toevoegingen alleen met netlist 1.
+Met gebruik van het genetisch algoritme en/of de random layer methode werkt A* met alle 6 netlists, en met een lagere kost dan het greedy algoritme.
 
 
 ### Genetisch algoritme (genetic.py)
