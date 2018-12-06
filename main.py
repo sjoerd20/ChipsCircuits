@@ -15,24 +15,32 @@ import visualization
 def main():
 
 	"""
-	load net lists
+		load circuits and netlists
 	"""
 	circuits = load_data(directory + "/data/circuits.txt")
 	netlists = load_data(directory + "/data/netlists.txt")
 
+	"""
+		choose circuit, netlist, algorithm, and size of the chip
+	"""
+
 	circuit = circuits.circuit_1
 	netlist = netlists.netlist_6
 	algorithm = a_star
-	population_size = 20
 	width, height = 18, 17
 
-	print("Upper bound (worst case) = ", upper_bound(Chip(circuit, width, height)))
+	"""
+		state space size and upper/lower bounds for given chip and netlist
+	"""
+	state_space(circuit, width, height, netlist)
 
-	# make netlist with genetic algorithm
+	"""
+		make desirable netlist with genetic algorithm
+	"""
+	population_size = 20
 	netlist, total_cost = make_netlist(population_size, circuit, width, height, algorithm, netlist)
-	print("Total cost = ", total_cost)
-
-	print("Lower bound = ", lower_bound(circuit, netlist))
+	# test algorithm with netlist obtained from genetic algorithm
+	print("Total cost", algorithm.__name__, " = ", total_cost)
 
 	return
 

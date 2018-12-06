@@ -17,6 +17,7 @@ class PriorityQueue():
 	def get(self):
 		return heapq.heappop(self.elements)[1]
 
+
 def a_star(chip, net, random_layer = 0):
 	start_layer = 0
 	if distance(chip.circuit[net[0]], chip.circuit[net[1]]) > 6:
