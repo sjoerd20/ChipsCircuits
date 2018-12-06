@@ -8,7 +8,7 @@ def fitness(chip, netlist, algorithm):
 	cost = 0
 	for index, net in enumerate(netlist):
 		try:
-			cost += algorithm(chip, net, int(random() * chip.max_levels))
+			cost += algorithm(chip, net, int(random() * len(netlist) / 10))
 		except KeyError:
 			return(index)
 	return upper_bound(chip) - cost
