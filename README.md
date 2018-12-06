@@ -50,7 +50,7 @@ Voor het sorteren van de netlists hebben we een genetisch algoritme gebruikt.
 
 Voor het neerleggen van de nets hebben we gebruik gemaakt van een greedy algorithm, en van A*, een welbekend pathfinding algoritme.
 
-Al deze algoritmes worden uitgelegd in de README in de algorithms folder!
+Al deze algoritmes worden uitgelegd in de README in de /code folder!
 
 ## Aan de slag
 
