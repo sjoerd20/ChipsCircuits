@@ -129,7 +129,7 @@ def main():
 
 	return
 
-def test_algorithm(circuit, width, height, netlist, algorithm):
+def test_algorithm(circuit, width, height, netlist, algorithm, random_layers = False):
 	print(algorithm.__name__)
 	cost = 0
 	while cost == 0:
@@ -137,7 +137,7 @@ def test_algorithm(circuit, width, height, netlist, algorithm):
 		chip.load_chip()
 		for net in netlist:
 			try:
-				cost += algorithm(chip, net, int(random() * 7))
+				cost += algorithm(chip, net, int(random() * chip.max_levels * random_layers))
 			except KeyError:
 				cost = 0
 				break
