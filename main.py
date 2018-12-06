@@ -86,7 +86,7 @@ def main():
 		netlists.append(argsdict[args.netlist])
 
 	do_visualization = False
-	if argsdict["visualization"]:
+	if argsdict["visualization"] == "true":
 		do_visualization = True
 
 	# circuit = circuits.circuit_1
@@ -118,18 +118,22 @@ def main():
 					width, height = chip_dimensionsdict[circuit[1]]
 					population_size = 20
 					if algorithm.__name__ == a_star:
+						print("busy")
 						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
+						print("and still busy")
 						total_cost = upper_bound(Chip(circuit, width, height)) - fitness
+						print("again still busy")
 					else:
-						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm)
+						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
 					# test algorithm with netlist obtained from genetic algorithm
 					print("Total cost", algorithm.__name__, " = ", total_cost)
 
 
 
+
 	return
 
-def test_algorithm(circuit, width, height, netlist, algorithm, random_layers = False):
+def test_algorithm(circuit, width, height, netlist, algorithm, do_visualization, random_layers=False):
 	print(algorithm.__name__)
 	cost = 0
 	while cost == 0:
@@ -144,9 +148,9 @@ def test_algorithm(circuit, width, height, netlist, algorithm, random_layers = F
 	print("Total cost", algorithm.__name__, " = ", cost)
 
 	# print grid
-	visualization.plot_3D(directory + "/results", chip, width, height)
-	visualization.plot_grid(directory + "/results", chip, width, height)
-	# visualization.print_simple_grid(chip)
+	if do_visualization == True:
+		visualization.plot_3D(directory + "/results", chip, width, height)
+		visualization.plot_grid(directory + "/results", chip, width, height)
 
 	return cost
 
