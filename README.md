@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 ### Structuur
 
-Het startpunt van het programma bevindt zich in het main.py file in de hoofd directory. De overige code staat in de map Code, met de algoritmes in de map Algorithms. Alle resultaten staan in het mapje Data.
+Het startpunt van het programma bevindt zich in het main.py file in de hoofd directory. De overige code staat in de map Code, met de algoritmes in de map Algorithms. Alle data staan in het mapje Data.De resultaten staan allemaal in Results
 
 ### Runnen
 
