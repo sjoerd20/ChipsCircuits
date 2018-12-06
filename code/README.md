@@ -26,6 +26,21 @@ Dit bestand bevat de code voor alle visualizaties van het probleem en de oplossi
 
 ## Algorithms
 
-### greedy (greedy.py)
+### greedy algoritme (greedy.py)
 
-### A* (a_star.py)
+
+
+### A* algoritme (a_star.py)
+
+
+
+### genetic heuristiek (genetic.py)
+
+
+
+### shared_functions.py
+
+Dit bestand bevat functies die gebruikt worden door meerdere algoritmes in verschillende files. 
+
+
+
