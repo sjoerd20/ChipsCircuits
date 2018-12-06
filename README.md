@@ -37,7 +37,10 @@ Er zijn twee niveaus van complexiteit:
   
   Er zijn dus tot wel ![2](chips.gif) ≈ 3.1 * 10^1593 manieren om de nets neer te leggen.
   
-De grootte van onze space state is het product van deze twee: 1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijke oplossingen.
+De grootte van onze space state is het product van deze twee.
+Als we de grootste netlist van 70 nets en het grote circuit van 18 bij 17 bij 8 invullen krijgen we:
+
+1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijke oplossingen.
   
 ### Methode
 
