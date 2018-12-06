@@ -117,7 +117,6 @@ def main():
 				if (circuit[1] == "small" and (netlist[1] == 1 or netlist[1] == 2 or netlist[1] == 3)) or (circuit[1] == "large" and (netlist[1] == 4 or netlist[1] == 5 or netlist[1] == 6)):
 					width, height = chip_dimensionsdict[circuit[1]]
 					population_size = 20
-					
 					if algorithm == a_star:
 						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
 						total_cost = upper_bound(Chip(circuit, width, height)) - fitness
@@ -125,14 +124,9 @@ def main():
 						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
 					# test algorithm with netlist obtained from genetic algorithm
 					print("Total cost", algorithm.__name__, " = ", total_cost)
-
-
-
-
 	return
 
 def test_algorithm(circuit, width, height, netlist, algorithm, do_visualization, random_layers=False):
-	print(algorithm.__name__)
 	cost = 0
 	while cost == 0:
 		chip = Chip(circuit, width, height)
@@ -143,7 +137,6 @@ def test_algorithm(circuit, width, height, netlist, algorithm, do_visualization,
 			except KeyError:
 				cost = 0
 				break
-	print("Total cost", algorithm.__name__, " = ", cost)
 
 	# print grid
 	if do_visualization == True:
