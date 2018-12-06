@@ -8,6 +8,15 @@
 
 http://heuristieken.nl/wiki/index.php?title=Chips_%26_Circuits
 
+Hallo geïnteresseerden! Onze casus is 'Chips and Circuits'. 
+Hierbij kijken we naar circuits van 'gates' en proberen we daar verbindingen, ofwel 'nets', tussen te leggen.
+
+Wij hebben een aantal netlists en circuits gekregen, en de opdracht gekregen om de nets uit de netlists op de circuits zo te verbinden dat alle nets worden geplaatst zonder intersecties. Elke net begint en eindigt bij een gate, ze kunnen dan ook niet door gates heen.
+
+We kunnen wel naar boven! Een chip in onze opdracht heeft 8 lagen. We hoeven dus niet alleen in een vlak te werken; we kunnen ook omhoog en omlaag naar andere lagen. Alle gates bevinden zich op de onderste laag.
+
+![4](pictures/chips3.png)
+
 ### Analyse state space
 
 Hoe groot is de state space nou eigenlijk?
