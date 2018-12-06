@@ -46,10 +46,14 @@ def a_star(chip, net, random_layer = 0):
 
 	prev = goal
 	shortest_path.append(goal)
+	for i in range(0, start_layer + 1):
+		shortest_path.append(chip.circuit[net[1]] + (i,))
 	while came_from[prev] is not None:
 		shortest_path.append(came_from[prev])
 		prev = came_from[prev]
 	chip.walls += shortest_path
+	for i in range(start_layer, 0, -1):
+		shortest_path.append(chip.circuit[net[0]] + (i,))
 
 	# store path for this net in new Path object and append to chip object
 	chip.paths.append(classChip.Path(net, shortest_path))
