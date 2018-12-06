@@ -13,7 +13,11 @@ Hierbij kijken we naar circuits van 'gates' en proberen we daar verbindingen, of
 
 Wij hebben een aantal netlists en circuits gekregen, en de opdracht gekregen om de nets uit de netlists op de circuits zo te verbinden dat alle nets worden geplaatst zonder intersecties. Elke net begint en eindigt bij een gate, ze kunnen dan ook niet door gates heen.
 
-We kunnen wel naar boven! Een chip in onze opdracht heeft 8 lagen. We hoeven dus niet alleen in een vlak te werken; we kunnen ook omhoog en omlaag naar andere lagen. Alle gates bevinden zich op de onderste laag.
+Een chip in onze opdracht heeft 8 lagen. We hoeven dus niet alleen in een vlak te werken; we kunnen ook omhoog en omlaag naar andere lagen. Alle gates bevinden zich op de onderste laag.
+
+Elke stap die we nemen op het circuit kost 1 eenheid.
+
+Het doel? Alle nets plaatsen, en de totale kosten zo laag mogelijk houden.
 
 ![4](pictures/chips3.png)
 
