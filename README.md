@@ -6,11 +6,7 @@
 
 ## Casus
 
-### Uitleg casus
-
-### Analyse state space
-
-### Analyse upper en lower bounds
+http://heuristieken.nl/wiki/index.php?title=Chips_%26_Circuits
 
 ## Aan de slag
 
