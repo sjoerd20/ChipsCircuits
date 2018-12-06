@@ -45,7 +45,7 @@ def walks(chip):
 	# can only go in four directions on the outer circle on other layers, and on all other spaces on the outer layers
 	walks *= 4 ** ((chip.max_levels - 2) * (2 * chip.width + 2 * chip.height - 8) + 2 * (chip.width - 2)*(chip.height - 2))
 	# on all other spaces, we can go in AT MOST 5 directions
-	walks *= 5 ** (chip.max_levels * (chip.width - 2) * (chip.height - 2))
+	walks *= 5 ** ((chip.max_levels - 2) * (chip.width - 2) * (chip.height - 2))
 	return walks
 		
 def state_space(circuit, width, height, netlist):
