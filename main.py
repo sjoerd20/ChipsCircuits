@@ -44,6 +44,7 @@ def main():
 					"all" : (netlists.netlist_1, netlists.netlist_2,
 							 netlists.netlist_3, netlists.netlist_4,
 							 netlists.netlist_5, netlists.netlist_6)}
+	visualization_optionsdict = {"true" : True, "false" : False}
 
 	# dimensions in (width, height)
 	chip_dimensionsdict = {"small" : (18, 13), "large" : (18, 17)}
@@ -52,6 +53,7 @@ def main():
 	parser.add_argument("algorithm", choices=algorithmsdict.keys(), nargs="?", default="both", help="Choose algorithm: greedy/a_star/both. Default is both")
 	parser.add_argument("circuit", choices=circuitsdict.keys(), nargs="?", default="both", help="Choose circuit: small/large/both. Default is both. Choose small netlist with small circuit and large netlist with large circuit")
 	parser.add_argument("netlist", choices=netlistsdict.keys(), nargs="?", default="all", help="Choose circuit: 1/2/3/4/5/6/small/large/all. Default is all. Choose small netlist with small circuit and large netlist with large circuit")
+	parser.add_argument("-v", "--visualization", choices=visualization_optionsdict.keys(), default="false", help="Show visualization: true/false. Default is false")
 	args = parser.parse_args()
 	argsdict = vars(args) 		# dict with all args stored by keys
 
@@ -60,7 +62,7 @@ def main():
 	if (argsdict["algorithm"]) == "both":
 		algorithmslist = [algorithmsdict[args.algorithm][i] for i in range(len(algorithmsdict[args.algorithm]))]
 	else:
-		algorithms.append(argsdict[args.algorithm])
+		algorithmslist.append(algorithmsdict[args.algorithm])
 
 	# Extract arguments
 	circuitslist = []
@@ -82,6 +84,10 @@ def main():
 		netlistslist = [(netlistsdict[args.netlist][i], L_netlists[i]) for i in range(len(netlistsdict[args.netlist]))]
 	else:
 		netlists.append(argsdict[args.netlist])
+
+	do_visualization = False
+	if argsdict["visualization"]:
+		do_visualization = True
 
 	# circuit = circuits.circuit_1
 	# netlist = netlists.netlist_6
@@ -111,10 +117,15 @@ def main():
 				if (circuit[1] == "small" and (netlist[1] == 1 or netlist[1] == 2 or netlist[1] == 3)) or (circuit[1] == "large" and (netlist[1] == 4 or netlist[1] == 5 or netlist[1] == 6)):
 					width, height = chip_dimensionsdict[circuit[1]]
 					population_size = 20
-					netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
-					total_cost = upper_bound(Chip(circuit, width, height)) - fitness
+					if algorithm.__name__ == a_star:
+						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
+						total_cost = upper_bound(Chip(circuit, width, height)) - fitness
+					else:
+						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm)
 					# test algorithm with netlist obtained from genetic algorithm
 					print("Total cost", algorithm.__name__, " = ", total_cost)
+
+
 
 	return
 
@@ -134,8 +145,10 @@ def test_algorithm(circuit, width, height, netlist, algorithm):
 
 	# print grid
 	visualization.plot_3D(directory + "/results", chip, width, height)
-	# visualization.plot_grid(directory + "/results", chip, width, height)
+	visualization.plot_grid(directory + "/results", chip, width, height)
 	# visualization.print_simple_grid(chip)
+
+	return cost
 
 if __name__ == "__main__":
 	main()
