@@ -38,7 +38,6 @@ Hiervoor hebben we twee oplossingen, die beiden een niet-deterministische oploss
 Een algoritme dat direct van gate naar gate probeert te gaan, en simpelweg omhoog of omlaag gaat als het niet verder kan op dezelfde laag. 
 
 Dit algoritme werkt met alle 6 netlists, met een relatief hoge kost.
-Met gebruik van het genetisch algoritme om de netlist te sorteren, of de random layer methode, kan de kost verlaagd worden.
 
 ### A* algoritme (a_star.py)
 
@@ -47,11 +46,9 @@ A* is een algorimte dat altijd het kortste pad tussen twee punten vindt.
 A* werkt zonder toevoegingen alleen met netlist 1.
 Met gebruik van het genetisch algoritme en/of de random layer methode werkt A* met alle 6 netlists, en met een lagere kost dan het greedy algoritme.
 
-
 ### Genetisch algoritme (genetic.py)
 
 We maken willekeurige volgorden van onze netlist aan en selecteren zo de volgorden die een zo laag mogelijke totale kost hebben met A*, door meerdere generaties.
-
 
 ### shared_functions.py
 
