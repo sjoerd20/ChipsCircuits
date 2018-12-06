@@ -6,7 +6,11 @@
 
 ## Casus
 
-Uitleg van de casus
+### Uitleg casus
+
+### Analyse state space
+
+### Analyse upper en lower bounds
 
 ## Aan de slag
 
