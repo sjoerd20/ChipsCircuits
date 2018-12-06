@@ -10,9 +10,9 @@ Course: Programmeertheorie, UvA
 
 Alle code is geschreven in Python3.7. Alle benodige packages staan in requirements.txt. De packages zijn te installeren volgens het volgende commando:
 
-'''
+```
 pip install -r requirements.txt
-'''
+```
 
 ### Structuur
 
