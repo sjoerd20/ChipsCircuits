@@ -35,7 +35,7 @@ Er zijn twee niveaus van complexiteit:
   
   Vanuit alle andere punten, dit zijn er (x-2) * (y-2) * (z-2), kunnen we hooguit 5 kanten op.
   
-  Er zijn dus tot wel ![2](chips3.gif) ≈ 3.1 * 10^1593 manieren om de nets neer te leggen.
+  Er zijn dus tot wel ![2](chips.gif) ≈ 3.1 * 10^1593 manieren om de nets neer te leggen.
   
 De grootte van onze space state is het product van deze twee: 1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijke oplossingen.
   
