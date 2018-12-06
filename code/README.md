@@ -7,12 +7,11 @@
 Dit bestand bevat 3 classes: Node, Path, Chip.
 
 * Node:
-- gg
-- gd
+  eefiefie
 * Path
-- sfsf
+  ekfmmfek
 * Chip
-- dffd
+  rrg
 
 
 ### load_data.py
