@@ -1,8 +1,12 @@
 # Programmeertheorie: Chips & Circuits
 
-By: Ivo de Brouwer & Sjoerd Terpstra
+* Course: Programmeertheorie, UvA
+* Website: www.heuristieken.nl
+* Casus: Chip & Circuits
 
-Course: Programmeertheorie, UvA
+## Casus
+
+Uitleg van de casus
 
 ## Aan de slag
 
@@ -16,8 +20,13 @@ pip install -r requirements.txt
 
 ### Structuur
 
+Het startpunt van het programma bevindt zich in het main.py file in de hoofd directory. De overige code staat in de map Code, met de algoritmes in de map Algorithms. Alle resultaten staan in het mapje Data.
 
 ### Runnen
+
+```
+python main.py
+```
 
 ## Auteurs
 * Ivo de Brouwer
