@@ -53,8 +53,14 @@ Er zijn twee niveaus van complexiteit:
 De grootte van onze space state is het product van deze twee.
 Als we de grootste netlist van 70 nets en het grote circuit van 18 bij 17 bij 8 invullen krijgen we:
 
-1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijke oplossingen.
-  
+1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijkheden.
+
+### Wat maakt ons probleem moeilijk?
+
+De grootte van de state space maakt het natuurlijk heel lastig om een optimale oplossing te vinden. Maar ook simpelweg het plaatsen van alle nets kan heel lastig worden. Zo kan het bijvoorbeeld gebeuren dat een gate geen beschikbare buren meer heeft, en dus een van de nets niet geplaatst kan worden. Vooral bij de grotere netlists kan dit al snel gebeuren, in welke volgorde je de nets ook probeert te plaatsen. 
+
+Als je de nets één voor één optimaal probeert te plaatsen, kom je al gauw vast te zitten. Maar zodra je een net suboptimaal plaatst om ruimte over te houden voor volgende nets, kun je niet meer zeker weten of je totale kosten zo laag mogelijk zijn. Hierdoor is het erg moeilijk om een oplossing te vinden met zo min mogelijk kosten.
+
 ### Methode
 
 Hoe hebben we dit aangepakt? 
