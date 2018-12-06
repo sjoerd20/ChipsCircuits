@@ -110,13 +110,11 @@ def main():
 			for netlist in netlistslist:
 				if (circuit[1] == "small" and (netlist[1] == 1 or netlist[1] == 2 or netlist[1] == 3)) or (circuit[1] == "large" and (netlist[1] == 4 or netlist[1] == 5 or netlist[1] == 6)):
 					width, height = chip_dimensionsdict[circuit[1]]
+					population_size = 20
+					netlist, total_cost = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
 
-					# run desired algorithm here
-
-	# population_size = 20
-	# netlist, total_cost = make_netlist(population_size, circuit, width, height, algorithm, netlist)
-	# # test algorithm with netlist obtained from genetic algorithm
-	# print("Total cost", algorithm.__name__, " = ", total_cost)
+					# test algorithm with netlist obtained from genetic algorithm
+					print("Total cost", algorithm.__name__, " = ", total_cost)
 
 	return
 

@@ -26,20 +26,27 @@ Dit bestand bevat de code voor alle visualizaties van het probleem en de oplossi
 
 ## Algorithms
 
-### greedy algoritme (greedy.py)
+### Greedy algoritme (greedy.py)
 
-Deterministisch algoritme 
+Een deterministisch algoritme dat direct van gate naar gate probeert te gaan, en simpelweg omhoog of omlaag gaat als het niet verder kan op dezelfde laag. 
+
+Dit algoritme werkt met alle 6 netlists, met een relatief hoge kost.
 
 ### A* algoritme (a_star.py)
 
 A* is een deterministisch algoritme. Dit algorimte vindt altijd het kortste pad tussen twee punten. 
+Echter loopt deze vast, zelfs bij de kleine netlists, omdat een gate bijvoorbeeld geen buren meer heeft.
 
-Omdat A* in dit programma wordt gecombineerd met het niet-deterministische genetische algoritme, zijn de berekende oplossingen niet-deterministisch
+Hiervoor hebben we twee oplossingen, die beiden een niet-deterministische oplossing verkrijgen:
+* Het gebruik van een genetisch algoritme om de netlist te sorteren, zodat A* wél werkt
+* Elke net eerst naar een willekeurige laag van de chip te sturen, om de dichtheid van nets te verminderen
+
+Hierdoor werkt A* met alle 6 netlists, en met een lagere kost dan het greedy algoritme.
 
 
-### genetic heuristiek (genetic.py)
+### Genetisch algoritme (genetic.py)
 
-Dit is een niet-deterministisch algoritme
+We maken willekeurige volgorden van onze netlist aan en selecteren zo de volgorden die een zo laag mogelijke totale kost hebben met A*, door meerdere generaties.
 
 
 ### shared_functions.py
