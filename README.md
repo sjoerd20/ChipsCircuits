@@ -22,8 +22,8 @@ Er zijn twee niveaus van complexiteit:
   We hebben een chip met breedte x, lengte y en hoogte z. Dan heeft deze inhoud U = x * y * z, en we kunnen maximaal U stappen nemen. Dit is dus tevens de upper bound van onze total cost. Op elk punt kunnen we een aantal verschillende kanten op. Er zijn 6 verschillende richtingen: vier kanten op het vlak, naar boven en naar onderen. Maar vanuit elk punt kunnen we hooguit 5 richtingen op: vanuit een gate kunnen we niet naar onderen, en als we eenmaal vanuit de gate zijn gelopen kunnen we niet meer teruglopen. Als we in een hoek zitten kunnen we nog minder kanten op!
   
   Laten we zien hoe dat er uit ziet:
-  ![1](chips1.png)
-  ![2](chips2.png)
+  ![1](pictures/chips1.png)
+  ![2](pictures/chips2.png)
   
   Dus we kunnen een strakkere bovengrens dan 5^U verzinnen! 
   
@@ -35,7 +35,7 @@ Er zijn twee niveaus van complexiteit:
   
   Vanuit alle andere punten, dit zijn er (x-2) * (y-2) * (z-2), kunnen we hooguit 5 kanten op.
   
-  Er zijn dus tot wel ![2](chips.gif) ≈ 3.1 * 10^1593 manieren om de nets neer te leggen.
+  Er zijn dus tot wel ![3](pictures/chips.gif) ≈ 3.1 * 10^1593 manieren om de nets neer te leggen.
   
 De grootte van onze space state is het product van deze twee.
 Als we de grootste netlist van 70 nets en het grote circuit van 18 bij 17 bij 8 invullen krijgen we:
