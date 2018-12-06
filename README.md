@@ -39,6 +39,15 @@ Er zijn twee niveaus van complexiteit:
   
 De grootte van onze space state is het product van deze twee: 1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijke oplossingen.
   
+### Methode
+
+Hoe hebben we dit aangepakt? 
+
+Voor het sorteren van de netlists hebben we een genetisch algoritme gebruikt.
+
+Voor het neerleggen van de nets hebben we gebruik gemaakt van een greedy algorithm, en van A*, een welbekend pathfinding algoritme.
+
+Al deze algoritmes worden uitgelegd in de README in de algorithms folder!
 
 ## Aan de slag
 
