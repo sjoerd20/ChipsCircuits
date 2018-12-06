@@ -137,7 +137,7 @@ def test_algorithm(circuit, width, height, netlist, algorithm, random_layers = F
 		chip.load_chip()
 		for net in netlist:
 			try:
-				cost += algorithm(chip, net, int(random() * chip.max_levels * random_layers))
+				cost += algorithm(chip, net, random_layers * int(random() * len(netlist) / 10 + 1))
 			except KeyError:
 				cost = 0
 				break
