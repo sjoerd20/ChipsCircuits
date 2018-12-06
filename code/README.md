@@ -28,14 +28,18 @@ Dit bestand bevat de code voor alle visualizaties van het probleem en de oplossi
 
 ### greedy algoritme (greedy.py)
 
-
+Deterministisch algoritme 
 
 ### A* algoritme (a_star.py)
 
+A* is een deterministisch algoritme. Dit algorimte vindt altijd het kortste pad tussen twee punten. 
+
+Omdat A* in dit programma wordt gecombineerd met het niet-deterministische genetische algoritme, zijn de berekende oplossingen niet-deterministisch
 
 
 ### genetic heuristiek (genetic.py)
 
+Dit is een niet-deterministisch algoritme
 
 
 ### shared_functions.py
