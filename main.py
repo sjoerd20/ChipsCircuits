@@ -38,7 +38,8 @@ def main():
 		make desirable netlist with genetic algorithm
 	"""
 	population_size = 20
-	netlist, total_cost = make_netlist(population_size, circuit, width, height, algorithm, netlist)
+	netlist, fitness = make_netlist(population_size, circuit, width, height, algorithm, netlist)
+	total_cost = upper_bound(Chip(circuit, width, height)) - fitness
 	# test algorithm with netlist obtained from genetic algorithm
 	print("Total cost", algorithm.__name__, " = ", total_cost)
 
