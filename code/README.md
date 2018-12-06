@@ -50,7 +50,7 @@ Met gebruik van het genetisch algoritme en/of de random layer methode werkt A* m
 
 ### Genetisch algoritme (genetic.py)
 
-We maken willekeurige volgorden van onze netlist aan en selecteren zo de volgorden die zo laag mogelijke totale kosten hebben met A*, door meerdere generaties. Elke generatie nemen we dan de beste volgorden (die de laagste kosten hebben met A*) en maken we kinderen uit paren van deze generatie door willekeurig steeds een net uit een van beide ouders over te nemen en herhalingen van nets te voorkomen. Deze kinderen worden dan de nieuwe generatie en we herhalen het proces.
+We maken willekeurige volgorden van onze netlist aan en selecteren zo de volgorden die zo laag mogelijke totale kosten hebben met A*, door meerdere generaties. Elke generatie nemen we dan de beste volgorden (die de laagste kosten hebben met A*) en maken we kinderen uit paren van deze generatie door willekeurig steeds een net uit een van beide ouders over te nemen (als deze er al in zit pakken we een andere). Deze kinderen worden dan de nieuwe generatie en we herhalen het proces.
 
 ### shared_functions.py
 
