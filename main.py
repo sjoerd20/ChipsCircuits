@@ -124,7 +124,7 @@ def main():
 					population_size = 20
 					if algorithm == a_star:
 						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
-						total_cost = upper_bound(Chip(circuit, width, height)) - fitness
+						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization, True)
 					else:
 						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
 					# test algorithm with netlist obtained from genetic algorithm
