@@ -75,10 +75,13 @@ Voor het neerleggen van de nets hebben we gebruik gemaakt van een greedy pathfin
 
 Stel voor: we proberen onze nets neer te leggen door willekeurig door ons circuit te lopen. Wat blijkt nu? We komen al bij de eerste paar nets vast te zitten, omdat we geen idee hebben welke kant we op moeten lopen. Hiervoor hebben we algoritmes nodig. 
 
-Een greedy algoritme dat direct naar het doel probeert te gaan kan al zo'n 10 nets neerleggen voordat het vastloopt.
-Een beter pathfinding algoritme zoals A* loopt vast na zo'n 20 nets. We moeten uiteindelijk 70 nets neer kunnen leggen om een oplossing te vinden voor het grootste netlist. We hebben dus heuristieken nodig om slimmer de nets neer te leggen. Het is dan ook een heel gedoe om een oplossing te vinden, laat staan een efficiente met lage kosten.
+Hoe veel oplossingen zijn er nou eigenlijk? De oplossingsdichtheid is enorm klein. Na 100.000 willekeurige loopjes door het circuit te nemen is het niet eens gelukt meer dan enkele nets neer te leggen, laat staan een volledige oplossing te verkrijgen.
+
+Een greedy algoritme dat direct naar het doel probeert te gaan kan zo'n 10 nets neerleggen voordat het vastloopt.
+Een beter pathfinding algoritme zoals A* loopt vast na zo'n 20 nets. We moeten uiteindelijk 70 nets neer kunnen leggen om een oplossing te vinden voor het grootste netlist. Zelfs door de netlist te sorteren op verschillende manieren (op afstand, op probleemgevallen, met gebruik van een genetisch algoritme etc.) lopen de algoritmes vast bij de grotere netlists. We hebben dus heuristieken nodig om slimmer de nets neer te leggen. Het is dan ook een heel gedoe om een oplossing te vinden, laat staan een oplossing met relatief lage kosten.
 
 Als we eenmaal een oplossing hebben gevonden die alle nets kan plaatsen, kunnen we kijken hoe hoog de kosten zijn, relatief tot de upper en lower bounds, en tot de kosten van andere oplossingen. Een oplossing die alle 70 nets kan plaatsen met 2000 eenheden aan kosten is nog steeds beter dan eentje die 69 van de nets kan plaatsen met slechts 1000 eenheden aan kosten. Als we eenmaal meerdere oplossingen voor alle netlists hebben verkregen kunnen we gaan kijken naar hoe laag de totale kosten zijn ten opzichte van elkaar en de upper/lower bounds.
+
 
 
 ## Aan de slag
