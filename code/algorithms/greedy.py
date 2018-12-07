@@ -1,4 +1,5 @@
 from shared_functions import *
+import classChip
 
 x, y, z = 0, 0, 0 		# global variables
 
@@ -16,8 +17,17 @@ def move(coordinates, chip):
 		if chip.nodes.get(id) is None:
 			chip.init_nodes(z)
 		chip.nodes.get(id).is_free = False
+	return(chip.nodes.get(id))
 
 def greedy(chip, net, start_layer = 0):
+
+	start, goal = chip.circuit[net[0]] + (start_layer,), chip.circuit[net[1]] + (start_layer,)
+	shortest_path = []
+	shortest_path.append(start)
+	for i in range(0, start_layer + 1):
+		shortest_path.append(chip.circuit[net[1]] + (i,))
+
+	node = None
 	net_cost = 0
 	global x, y, z
 	x = chip.circuit[net[0]][0]
@@ -28,17 +38,25 @@ def greedy(chip, net, start_layer = 0):
 
 	while (x != end_x or y != end_y or z != 0) and z <= chip.levels:
 		if x < end_x:
-			move((x + 1, y, z), chip)
+			node = move((x + 1, y, z), chip)
 		elif x > end_x:
-			move((x - 1, y, z), chip)
+			node = move((x - 1, y, z), chip)
 		elif y < end_y:
-			move((x, y + 1, z), chip)
+			node = move((x, y + 1, z), chip)
 		elif y > end_y:
-			move((x, y - 1, z), chip)
+			node = move((x, y - 1, z), chip)
 		else:
 			z -= 1
 			id = str(x) + ", " + str(y) + ", " + str(z)
-			chip.nodes.get(id).is_free = False
+			node = chip.nodes.get(id)
+			node.is_free = False
+		shortest_path.append(node.coordinates)
 		net_cost += 1
+
+	# append shortest_path to chip.paths
+	for i in range(start_layer, 0, -1):
+		shortest_path.append(chip.circuit[net[0]] + (i,))
+	shortest_path.append(goal)
+	chip.paths.append(classChip.Path(net, shortest_path))
 
 	return net_cost

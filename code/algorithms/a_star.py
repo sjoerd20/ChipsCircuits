@@ -22,9 +22,9 @@ def a_star(chip, net, random_layer = 0):
 	start_layer = 0
 	if distance(chip.circuit[net[0]], chip.circuit[net[1]]) > 6:
 		start_layer = random_layer
-	for i in range(start_layer):
-		chip.walls.append(chip.circuit[net[0]] + (i,))
-		chip.walls.append(chip.circuit[net[1]] + (i,))
+	# for i in range(start_layer):
+	# 	chip.walls.append(chip.circuit[net[0]] + (i,))
+	# 	chip.walls.append(chip.circuit[net[1]] + (i,))
 	start, goal = chip.circuit[net[0]] + (start_layer,), chip.circuit[net[1]] + (start_layer,)
 	queue = PriorityQueue()
 	queue.put(start, 0)
@@ -54,6 +54,7 @@ def a_star(chip, net, random_layer = 0):
 	chip.walls += shortest_path
 	for i in range(start_layer, 0, -1):
 		shortest_path.append(chip.circuit[net[0]] + (i,))
+	chip.walls += shortest_path
 
 	# store path for this net in new Path object and append to chip object
 	chip.paths.append(classChip.Path(net, shortest_path))

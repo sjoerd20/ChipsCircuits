@@ -34,9 +34,9 @@ def main():
 					  "both" : (greedy, a_star)}
 	circuitsdict = {"small" : circuits.circuit_0, "large": circuits.circuit_1,
 					"both" : (circuits.circuit_0, circuits.circuit_1)}
-	netlistsdict = {1 : netlists.netlist_1, 2 : netlists.netlist_2,
-					3: netlists.netlist_3, 4 : netlists.netlist_4,
-					5: netlists.netlist_5, 6 : netlists.netlist_6,
+	netlistsdict = {"1" : netlists.netlist_1, "2" : netlists.netlist_2,
+					"3": netlists.netlist_3, "4" : netlists.netlist_4,
+					"5": netlists.netlist_5, "6" : netlists.netlist_6,
 					"small" : (netlists.netlist_1, netlists.netlist_2,
 							 netlists.netlist_3),
 					"large" : (netlists.netlist_4, netlists.netlist_5,
@@ -82,10 +82,11 @@ def main():
 		netlistslist = [(netlistsdict[args.netlist][i], L_netlists[i]) for i in range(len(netlistsdict[args.netlist]))]
 	elif (argsdict["netlist"]) == "large":
 		netlistslist = [(netlistsdict[args.netlist][i], L_netlists[i+3]) for i in range(len(netlistsdict[args.netlist]))]
+		print(netlistslist)
 	elif (argsdict["netlist"]) == "small":
 		netlistslist = [(netlistsdict[args.netlist][i], L_netlists[i]) for i in range(len(netlistsdict[args.netlist]))]
 	else:
-		netlists.append(argsdict[args.netlist])
+		netlistslist.append((netlistsdict[args.netlist], int(args.netlist)))
 
 	do_visualization = False
 	if argsdict["visualization"] == "true":
@@ -100,17 +101,19 @@ def main():
 		state space size and upper/lower bounds for given chip and netlist
 	"""
 
+	is_compatible = False
 	for circuit in circuitslist:
 		for netlist in netlistslist:
-			if (circuit[1] == "small" and (netlist[1] == 1 or netlist[1] == 2 or netlist[1] == 3)) or (circuit[1] == "large" and (netlist[1] == 4 or netlist[1] == 5 or netlist[1] == 6)):
+			if (circuit[1] == "both" or circuit[1] == "small" and (netlist[1] == 1 or netlist[1] == 2 or netlist[1] == 3)) or (circuit[1] == "large" and (netlist[1] == 4 or netlist[1] == 5 or netlist[1] == 6)):
 				width, height = chip_dimensionsdict[circuit[1]]
 				print("Calculating state space for circuit " + circuit[1] +
 					  " and netlist " + str(netlist[1]))
 				state_space(circuit[0], width, height, netlist[0])
 				print()
-			else:
-				print("No compatible circuits and netlists selected! Run main.py -h for help")
-				exit(1)
+				is_compatible = True
+	if is_compatible == False:
+		print("No compatible circuits and netlists selected! Run main.py -h for help")
+		exit(1)
 
 	"""
 		run desired algorithm
@@ -124,7 +127,9 @@ def main():
 					population_size = 20
 					if algorithm == a_star:
 						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
-						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization, True)
+						total_cost = upper_bound(Chip(circuit[0], width, height)) - fitness
+						total_cost = test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization)
+						#total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization, True)
 					else:
 						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
 					# test algorithm with netlist obtained from genetic algorithm
