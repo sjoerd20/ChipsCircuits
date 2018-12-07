@@ -55,8 +55,6 @@ Als we de grootste netlist van 70 nets en het grote circuit van 18 bij 17 bij 8 
 
 1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijkheden.
 
-## Exploratie
-
 ### Wat maakt ons probleem moeilijk?
 
 De grootte van de state space maakt het natuurlijk heel lastig om een optimale oplossing te vinden. Maar ook simpelweg het plaatsen van alle nets kan heel lastig worden. Zo kan het bijvoorbeeld gebeuren dat een gate geen beschikbare buren meer heeft, en dus een van de nets niet geplaatst kan worden. Vooral bij de grotere netlists kan dit al snel gebeuren, in welke volgorde je de nets ook probeert te plaatsen. 
@@ -69,9 +67,9 @@ Hoe hebben we dit aangepakt?
 
 Voor het sorteren van de netlists hebben we een genetisch algoritme gebruikt.
 
-Voor het neerleggen van de nets hebben we gebruik gemaakt van een greedy algorithm, en van A*, een welbekend pathfinding algoritme.
+Voor het neerleggen van de nets hebben we gebruik gemaakt van een greedy pathfinding algoritme, en van A*, een bekend pathfinding algoritme.
 
-Al deze algoritmes worden uitgelegd in de README in de /code folder!
+*Deze algoritmes worden uitgelegd en besproken in /code/README.md*
 
 ### Vergelijken van oplossingen
 
