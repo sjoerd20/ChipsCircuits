@@ -43,13 +43,18 @@ def main():
 
 	"""
 
-	population = initial_pop(population_size, circuit, width, height, algorithm, netlist)
-	while population[0][1] < len(netlist):
-		print(population[0][1], population[-1][1])
-		parents = selection(population, 8)
-		population = next_pop(7, circuit, width, height, algorithm, parents, netlist)
-		mutate_pop(population, 0.1)
-	print(population[0])
+	# population = initial_pop(population_size, circuit, width, height, algorithm, netlist)
+	# while population[0][1] < len(netlist):
+	# 	print(population[0][1], population[-1][1])
+	# 	parents = selection(population, 8)
+	# 	population = next_pop(7, circuit, width, height, algorithm, parents, netlist)
+	# 	mutate_pop(population, 0.1)
+	# print(population[0])
+
+	netlist = [(23, 8), (3, 0), (11, 24), (22, 16), (23, 4), (10, 4), (3, 5),
+	(3, 15), (9, 13), (3, 4), (1, 0), (3, 23), (7, 13), (5, 7), (15, 21),
+	(13, 18), (22, 11), (15, 8), (10, 7), (22, 13), (20, 19), (19, 2), (16, 9),
+	(15, 17), (6, 14), (15, 5), (7, 9), (19, 5), (20, 10), (2, 20)]
 
 	test(circuit, width, height, netlist, algorithm)
 	# test(circuit, width, height, netlist, greedy)
@@ -82,7 +87,7 @@ def test(circuit, width, height, netlist, algorithm):
 
 	# print grid
 	visualization.plot_3D(directory + "/results", chip, width, height)
-	# visualization.plot_grid(directory + "/results", chip, width, height)
+	visualization.plot_grid(directory + "/results", chip, width, height)
 	# visualization.print_simple_grid(chip)
 
 
