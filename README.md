@@ -111,6 +111,18 @@ Voor een overzicht van alle opties en hulp bij runnen, voer het volgende command
 python main.py -h
 ```
 
+### Visualization
+
+Momenteel werkt de visualizatie niet met de huidige algoritmes in de master branch. Om de visualizaties te kunnen zien, gebruik de files uit vizualisationBranch en run de volgende commands:
+
+```
+pip install requirements.txt
+```
+
+```
+python main.py
+```
+
 ## Auteurs
 * Ivo de Brouwer
 * Sjoerd Terpstra
