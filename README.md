@@ -55,6 +55,8 @@ Als we de grootste netlist van 70 nets en het grote circuit van 18 bij 17 bij 8 
 
 1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijkheden.
 
+## Exploratie
+
 ### Wat maakt ons probleem moeilijk?
 
 De grootte van de state space maakt het natuurlijk heel lastig om een optimale oplossing te vinden. Maar ook simpelweg het plaatsen van alle nets kan heel lastig worden. Zo kan het bijvoorbeeld gebeuren dat een gate geen beschikbare buren meer heeft, en dus een van de nets niet geplaatst kan worden. Vooral bij de grotere netlists kan dit al snel gebeuren, in welke volgorde je de nets ook probeert te plaatsen. 
@@ -70,6 +72,16 @@ Voor het sorteren van de netlists hebben we een genetisch algoritme gebruikt.
 Voor het neerleggen van de nets hebben we gebruik gemaakt van een greedy algorithm, en van A*, een welbekend pathfinding algoritme.
 
 Al deze algoritmes worden uitgelegd in de README in de /code folder!
+
+### Vergelijken van oplossingen
+
+Stel voor: we proberen onze nets neer te leggen door willekeurig door ons circuit te lopen. Wat blijkt nu? We komen al bij de eerste paar nets vast te zitten, omdat we geen idee hebben welke kant we op moeten lopen. Hiervoor hebben we algoritmes nodig. 
+
+Een greedy algoritme dat direct naar het doel probeert te gaan kan al zo'n 10 nets neerleggen voordat het vastloopt.
+Een beter pathfinding algoritme zoals A* loopt vast na zo'n 20 nets. We moeten uiteindelijk 70 nets neer kunnen leggen om een oplossing te vinden voor het grootste netlist. We hebben dus heuristieken nodig om slimmer de nets neer te leggen. Het is dan ook een heel gedoe om een oplossing te vinden, laat staan een efficiente met lage kosten.
+
+Als we eenmaal een oplossing hebben gevonden die alle nets kan plaatsen, kunnen we kijken hoe hoog de kosten zijn, relatief tot de upper en lower bounds, en tot de kosten van andere oplossingen. Een oplossing die alle 70 nets kan plaatsen met 2000 eenheden aan kosten is nog steeds beter dan eentje die 69 van de nets kan plaatsen met slechts 1000 eenheden aan kosten. Als we eenmaal meerdere oplossingen voor alle netlists hebben verkregen kunnen we gaan kijken naar hoe laag de totale kosten zijn ten opzichte van elkaar en de upper/lower bounds.
+
 
 ## Aan de slag
 
