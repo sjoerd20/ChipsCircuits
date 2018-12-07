@@ -87,8 +87,16 @@ Het startpunt van het programma bevindt zich in het main.py file in de hoofd dir
 
 ### Runnen
 
+Om het programma met standaardinstellingen te runnen voer het volgende commando uit:
+
 ```
 python main.py
+```
+
+Voor een overzicht van alle opties en hulp bij runnen, voer het volgende commando uit:
+
+```
+python main.py -h
 ```
 
 ## Auteurs
