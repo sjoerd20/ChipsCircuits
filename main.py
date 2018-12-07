@@ -67,11 +67,13 @@ def main():
 	# Extract arguments
 	circuitslist = []
 	L_chips = ["small", "large"]
-	if (argsdict["circuit"]) == "both":
+	if (argsdict["circuit"] == "both"):
 		for i in range(len(circuitsdict[args.circuit])):
 			circuitslist.append((circuitsdict[args.circuit][i], L_chips[i]))
-	else:
-		circuitslist.append((circuitsdict[args.circuit], L_chips[i]))
+	elif (argsdict["circuit"] == "small"):
+		circuitslist.append((circuitsdict[args.circuit], "small"))
+	elif (argsdict["circuit"] == "large"):
+		circuitslist.append((circuitsdict[args.circuit], "large"))
 
 	# Extract arguments
 	netlistslist = []
@@ -106,6 +108,9 @@ def main():
 					  " and netlist " + str(netlist[1]))
 				state_space(circuit[0], width, height, netlist[0])
 				print()
+			else:
+				print("No compatible circuits and netlists selected! Run main.py -h for help")
+				exit(1)
 
 	"""
 		run desired algorithm
