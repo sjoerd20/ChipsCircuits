@@ -52,7 +52,7 @@ def main():
 	# add parser arguments
 	parser.add_argument("algorithm", choices=algorithmsdict.keys(), nargs="?", default="both", help="Choose algorithm: greedy/a_star/both. Default is both")
 	parser.add_argument("circuit", choices=circuitsdict.keys(), nargs="?", default="both", help="Choose circuit: small/large/both. Default is both. Choose small netlist with small circuit and large netlist with large circuit")
-	parser.add_argument("netlist", choices=netlistsdict.keys(), nargs="?", default="all", help="Choose circuit: 1/2/3/4/5/6/small/large/all. Default is all. Choose small netlist with small circuit and large netlist with large circuit")
+	parser.add_argument("netlist", choices=netlistsdict.keys(), nargs="?", default="all", help="Choose netlist: 1/2/3/4/5/6/small/large/all. Default is all. Choose small netlist with small circuit and large netlist with large circuit")
 	parser.add_argument("-v", "--visualization", choices=visualization_optionsdict.keys(), default="false", help="Show visualization: true/false. Default is false")
 	args = parser.parse_args()
 	argsdict = vars(args) 		# dict with all args stored by keys
@@ -128,8 +128,7 @@ def main():
 					if algorithm == a_star:
 						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
 						total_cost = upper_bound(Chip(circuit[0], width, height)) - fitness
-						total_cost = test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization)
-						#total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization, True)
+						#total_cost = test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization)
 					else:
 						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
 					# test algorithm with netlist obtained from genetic algorithm
