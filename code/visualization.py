@@ -2,7 +2,7 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-from termcolor import colored
+# from termcolor import colored
 
 
 # print the circuit as a simple grid consisting of seperated layers

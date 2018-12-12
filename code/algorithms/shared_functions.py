@@ -4,16 +4,20 @@ from classChip import *
 # distance between two-dimensional points
 def distance(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1])
+
+# area between two-dimensional points
+def area(coords_a, coords_b):
+	return abs(coords_a[0] - coords_b[0]) * abs(coords_a[1] - coords_b[1])
 	
 # distance between three-dimensional points
 def heuristic(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1]) + abs(coords_a[2] - coords_b[2])
 
 # calculates how many gates are nearby; used to avoid 'blocking' gates
-def gate_density(chip, coordinates):
+def gate_density(chip, coordinates, goal):
 	dist = 0
 	for gate in chip.gates:
-		if heuristic(gate.coordinates, coordinates) < 4:
+		if heuristic(gate.coordinates, coordinates) < 4 and gate.coordinates != goal:
 			dist += 1
 	return dist
 

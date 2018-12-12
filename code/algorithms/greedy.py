@@ -19,20 +19,16 @@ def move(coordinates, chip):
 		chip.nodes.get(id).is_free = False
 	return(chip.nodes.get(id))
 
-def greedy(chip, net, start_layer = 0):
-
-	start, goal = chip.circuit[net[0]] + (start_layer,), chip.circuit[net[1]] + (start_layer,)
-	shortest_path = []
-	shortest_path.append(start)
-	for i in range(0, start_layer + 1):
-		shortest_path.append(chip.circuit[net[1]] + (i,))
+def greedy(chip, net):
+	start, goal = chip.circuit[net[0]] + (0,), chip.circuit[net[1]] + (0,)
+	shortest_path = [start]
 
 	node = None
 	net_cost = 0
 	global x, y, z
 	x = chip.circuit[net[0]][0]
 	y = chip.circuit[net[0]][1]
-	z = start_layer
+	z = 0
 	end_x = chip.circuit[net[1]][0]
 	end_y = chip.circuit[net[1]][1]
 
@@ -54,8 +50,6 @@ def greedy(chip, net, start_layer = 0):
 		net_cost += 1
 
 	# append shortest_path to chip.paths
-	for i in range(start_layer, 0, -1):
-		shortest_path.append(chip.circuit[net[0]] + (i,))
 	shortest_path.append(goal)
 	chip.paths.append(classChip.Path(net, shortest_path))
 

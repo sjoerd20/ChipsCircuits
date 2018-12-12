@@ -92,10 +92,6 @@ def main():
 	if argsdict["visualization"] == "true":
 		do_visualization = True
 
-	# circuit = circuits.circuit_1
-	# netlist = netlists.netlist_6
-	# algorithm = a_star
-	# width, height = 18, 17
 
 	"""
 		state space size and upper/lower bounds for given chip and netlist
@@ -126,9 +122,15 @@ def main():
 					width, height = chip_dimensionsdict[circuit[1]]
 					population_size = 20
 					if algorithm == a_star:
-						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
-						total_cost = upper_bound(Chip(circuit[0], width, height)) - fitness
-						#total_cost = test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization)
+						netlist[0].sort(key=lambda net: distance(circuit[0][net[0]], circuit[0][net[1]]))
+						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
+
+						netlist[0].sort(key=lambda net: area(circuit[0][net[0]], circuit[0][net[1]]))
+						total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization))
+						
+						if total_cost > upper_bound(Chip(circuit[0], width, height)):
+							netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
+							total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization))
 					else:
 						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
 					# test algorithm with netlist obtained from genetic algorithm
@@ -137,15 +139,28 @@ def main():
 
 def test_algorithm(circuit, width, height, netlist, algorithm, do_visualization, random_layers=False):
 	cost = 0
-	while cost == 0:
-		chip = Chip(circuit, width, height)
-		chip.load_chip()
-		for net in netlist:
-			try:
-				cost += algorithm(chip, net, int(random() * len(netlist) / 10 + 1))
-			except KeyError:
-				cost = 0
-				break
+	chip = Chip(circuit, width, height)
+	chip.load_chip()
+	gates = chip.gates[:]
+	for gate in gates:
+		for next in chip.possible_neighbors(gate.coordinates):
+			chip.walls.append(next)
+	for index, net in enumerate(netlist):
+		for gate in gates:
+			if gate.coordinates == chip.circuit[net[0]] + (0,) or gate.coordinates == chip.circuit[net[1]] + (0,):
+				for next in chip.possible_neighbors(gate.coordinates):
+					try:
+						chip.walls.remove(next)
+					except:
+						pass
+					for path in chip.paths:
+						if next in chip.paths:
+							chip.walls.append(next)
+		try:
+			cost += algorithm(chip, net)
+		except KeyError:
+			return(upper_bound(chip) + index)
+	return cost
 
 	# print grid
 	if do_visualization == True:
