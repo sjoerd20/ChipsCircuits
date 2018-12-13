@@ -25,20 +25,20 @@ def greedy(chip, net):
 	node = None
 	net_cost = 0
 	global x, y, z
-	x = chip.circuit[net[0]][0]
-	y = chip.circuit[net[0]][1]
+	x = start[0]
+	y = start[1]
 	z = 0
-	end_x = chip.circuit[net[1]][0]
-	end_y = chip.circuit[net[1]][1]
+	goal_x = goal[0]
+	goal_y = goal[1]
 
-	while (x != end_x or y != end_y or z != 0) and z <= chip.levels:
-		if x < end_x:
+	while (x != goal_x or y != goal_y or z != 0) and z <= chip.levels:
+		if x < goal_x:
 			node = move((x + 1, y, z), chip)
-		elif x > end_x:
+		elif x > goal_x:
 			node = move((x - 1, y, z), chip)
-		elif y < end_y:
+		elif y < goal_y:
 			node = move((x, y + 1, z), chip)
-		elif y > end_y:
+		elif y > goal_y:
 			node = move((x, y - 1, z), chip)
 		else:
 			z -= 1

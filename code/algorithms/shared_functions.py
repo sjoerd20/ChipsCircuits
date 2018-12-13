@@ -14,12 +14,40 @@ def heuristic(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1]) + abs(coords_a[2] - coords_b[2])
 
 # calculates how many gates are nearby; used to avoid 'blocking' gates
-def gate_density(chip, coordinates, goal):
+def gate_density(chip, coordinates, start, goal):
 	dist = 0
 	for gate in chip.gates:
-		if heuristic(gate.coordinates, coordinates) < 4 and gate.coordinates != goal:
+		if heuristic(gate.coordinates, coordinates) < 4 and gate.coordinates != start and gate.coordinates != goal:
 			dist += 1
 	return dist
+
+# score/fitness function
+def fitness(chip, netlist, algorithm):
+	gates = chip.gates[:]
+	cost = 0
+	for gate in gates:
+		for next in chip.possible_neighbors(gate.coordinates):
+			chip.walls.append(next)
+	for index, net in enumerate(netlist):
+		for gate in gates:
+			if gate.coordinates == chip.circuit[net[0]] + (0,) or gate.coordinates == chip.circuit[net[1]] + (0,):
+				for next in chip.possible_neighbors(gate.coordinates):
+					try:
+						chip.walls.remove(next)
+					except:
+						pass
+					for path in chip.paths:
+						x, y, z = next
+						id = (x, y, z)
+						for node_id in path.nodes:
+							if node_id == id:
+								chip.walls.append(next)
+		try:
+			cost += algorithm(chip, net)
+		except KeyError:
+			return index
+
+	return upper_bound(chip) - cost
 
 # largest lower bound
 def lower_bound(circuit, netlist):

@@ -13,6 +13,7 @@ from genetic import *
 import visualization
 import argparse
 
+
 def main():
 
 	"""
@@ -129,7 +130,7 @@ def main():
 
 						# if total_cost > upper_bound(Chip(circuit[0], width, height)):
 						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
-						total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization))
+						total_cost = test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization)
 
 					else:
 						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
@@ -137,33 +138,10 @@ def main():
 					print("Total cost", algorithm.__name__, " = ", total_cost)
 	return
 
-def test_algorithm(circuit, width, height, netlist, algorithm, do_visualization, random_layers=False):
-	cost = 0
+def test_algorithm(circuit, width, height, netlist, algorithm, do_visualization):
 	chip = Chip(circuit, width, height)
 	chip.load_chip()
-	gates = chip.gates[:]
-	for gate in gates:
-		for next in chip.possible_neighbors(gate.coordinates):
-			chip.walls.append(next)
-	for index, net in enumerate(netlist):
-		for gate in gates:
-			if gate.coordinates == chip.circuit[net[0]] + (0,) or gate.coordinates == chip.circuit[net[1]] + (0,):
-				for next in chip.possible_neighbors(gate.coordinates):
-					try:
-						chip.walls.remove(next)
-					except:
-						pass
-					for path in chip.paths:
-						x, y, z = next
-						id = (x, y, z)
-						for node_id in path.nodes:
-							if node_id == id:
-								chip.walls.append(next)
-		try:
-			cost += algorithm(chip, net)
-		except KeyError:
-			return(upper_bound(chip) + index)
-
+	cost = upper_bound(chip) - fitness(chip, netlist, algorithm)
 
 	# print grid
 	if do_visualization == True:

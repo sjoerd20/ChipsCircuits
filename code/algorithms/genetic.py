@@ -1,34 +1,8 @@
 # Work in progress!
 
-from random import *
+from random import choice, shuffle, random, sample
 from shared_functions import *
 from classChip import *
-
-def fitness(chip, netlist, algorithm):
-	gates = chip.gates[:]
-	cost = 0
-	for gate in gates:
-		for next in chip.possible_neighbors(gate.coordinates):
-			chip.walls.append(next)
-	for index, net in enumerate(netlist):
-		for gate in gates:
-			if gate.coordinates == chip.circuit[net[0]] + (0,) or gate.coordinates == chip.circuit[net[1]] + (0,):
-				for next in chip.possible_neighbors(gate.coordinates):
-					try:
-						chip.walls.remove(next)
-					except:
-						pass
-					for path in chip.paths:
-						x, y, z = next
-						id = (x, y, z)
-						for node_id in path.nodes:
-							if node_id == id:
-								chip.walls.append(next)
-		try:
-			cost += algorithm(chip, net)
-		except KeyError:
-			return index
-	return upper_bound(chip) - cost
 
 def initial_pop(size, circuit, width, height, algorithm, netlist):
 	population = []
