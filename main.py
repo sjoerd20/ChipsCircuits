@@ -24,8 +24,7 @@ def main():
 	"""
 		Extract program input
 	"""
-	# TODO make a function for this
-
+	
 	# add parser for command line arguments
 	parser = argparse.ArgumentParser(description="Chips & Circuits. If run without positional arguments deafult program is runned.")
 
@@ -122,15 +121,16 @@ def main():
 					width, height = chip_dimensionsdict[circuit[1]]
 					population_size = 20
 					if algorithm == a_star:
-						netlist[0].sort(key=lambda net: distance(circuit[0][net[0]], circuit[0][net[1]]))
-						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
+						# netlist[0].sort(key=lambda net: distance(circuit[0][net[0]], circuit[0][net[1]]))
+						# total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
+						#
+						# netlist[0].sort(key=lambda net: area(circuit[0][net[0]], circuit[0][net[1]]))
+						# total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization))
 
-						netlist[0].sort(key=lambda net: area(circuit[0][net[0]], circuit[0][net[1]]))
-						total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization))
-						
-						if total_cost > upper_bound(Chip(circuit[0], width, height)):
-							netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
-							total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization))
+						# if total_cost > upper_bound(Chip(circuit[0], width, height)):
+						netlist, fitness = make_netlist(population_size, circuit[0], width, height, algorithm, netlist[0])
+						total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist, algorithm, do_visualization))
+
 					else:
 						total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
 					# test algorithm with netlist obtained from genetic algorithm
@@ -154,13 +154,16 @@ def test_algorithm(circuit, width, height, netlist, algorithm, do_visualization,
 					except:
 						pass
 					for path in chip.paths:
-						if next in chip.paths:
-							chip.walls.append(next)
+						x, y, z = next
+						id = (x, y, z)
+						for node_id in path.nodes:
+							if node_id == id:
+								chip.walls.append(next)
 		try:
 			cost += algorithm(chip, net)
 		except KeyError:
 			return(upper_bound(chip) + index)
-	return cost
+
 
 	# print grid
 	if do_visualization == True:

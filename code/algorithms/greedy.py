@@ -22,7 +22,6 @@ def move(coordinates, chip):
 def greedy(chip, net):
 	start, goal = chip.circuit[net[0]] + (0,), chip.circuit[net[1]] + (0,)
 	shortest_path = [start]
-
 	node = None
 	net_cost = 0
 	global x, y, z

@@ -170,8 +170,8 @@ def plot_grid_level(results_directory, width, height, all_paths_coordinates=None
 
     # set correct limits and initiate grid
     plt.title("Chip level " + str(level))
-    ax.set_xlim(-1, width)
-    ax.set_ylim(-1, height)
+    ax.set_xlim(-0.2, width - 0.8)
+    ax.set_ylim(-0.2, height - 0.8)
     plt.gca().invert_yaxis()        # invert the y-axis to get correct view
     ax.grid(alpha=1)
     plt.savefig(results_directory + "/plot_grid/plot_grid" + str(level) + ".png")

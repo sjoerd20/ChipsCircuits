@@ -4,8 +4,8 @@ from random import *
 from shared_functions import *
 from classChip import *
 
-def fitness(chip, netlist, algorithm):		
-	gates = chip.gates[:]	
+def fitness(chip, netlist, algorithm):
+	gates = chip.gates[:]
 	cost = 0
 	for gate in gates:
 		for next in chip.possible_neighbors(gate.coordinates):
@@ -19,8 +19,11 @@ def fitness(chip, netlist, algorithm):
 					except:
 						pass
 					for path in chip.paths:
-						if next in chip.paths:
-							chip.walls.append(next)
+						x, y, z = next
+						id = (x, y, z)
+						for node_id in path.nodes:
+							if node_id == id:
+								chip.walls.append(next)
 		try:
 			cost += algorithm(chip, net)
 		except KeyError:

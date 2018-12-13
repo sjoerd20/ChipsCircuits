@@ -5,6 +5,7 @@ chardet==3.0.4
 conda==4.5.11
 cryptography==2.3.1
 cycler==0.10.0
+Cython==0.29.1
 idna==2.7
 kiwisolver==1.0.1
 matplotlib==3.0.1
