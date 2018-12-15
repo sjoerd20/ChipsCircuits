@@ -15,38 +15,26 @@ def heuristic(coords_a, coords_b):
 
 # calculates how many gates are nearby; used to avoid 'blocking' gates
 def gate_density(chip, coordinates, start, goal):
-	dist = 0
+	dist = 1
 	for gate in chip.gates:
-		if heuristic(gate.coordinates, coordinates) < 4 and gate.coordinates != start and gate.coordinates != goal:
-			dist += 1
+		if heuristic(gate.coordinates, coordinates) == 1 and gate.coordinates != start and gate.coordinates != goal:
+			dist *= 10
 	return dist
 
 # score/fitness function
-def fitness(chip, netlist, algorithm):
+def fitness(chip, netlist, algorithm, do_visualization = False):
+	chip.empty()
 	gates = chip.gates[:]
 	cost = 0
-	for gate in gates:
-		for next in chip.possible_neighbors(gate.coordinates):
-			chip.walls.append(next)
 	for index, net in enumerate(netlist):
-		for gate in gates:
-			if gate.coordinates == chip.circuit[net[0]] + (0,) or gate.coordinates == chip.circuit[net[1]] + (0,):
-				for next in chip.possible_neighbors(gate.coordinates):
-					try:
-						chip.walls.remove(next)
-					except:
-						pass
-					for path in chip.paths:
-						x, y, z = next
-						id = (x, y, z)
-						for node_id in path.nodes:
-							if node_id == id:
-								chip.walls.append(next)
 		try:
 			cost += algorithm(chip, net)
 		except KeyError:
 			return index
-
+	if do_visualization == True:
+		visualization.plot_3D(directory + "/results", chip, width, height)
+		visualization.plot_grid(directory + "/results", chip, width, height)
+	print(netlist)
 	return upper_bound(chip) - cost
 
 # largest lower bound
@@ -78,24 +66,16 @@ def walks(chip):
 	walks *= 4 ** ((chip.max_levels - 2) * (2 * chip.width + 2 * chip.height - 8) + 2 * (chip.width - 2)*(chip.height - 2))
 	# on all other spaces, we can go in AT MOST 5 directions
 	walks *= 5 ** ((chip.max_levels - 2) * (chip.width - 2) * (chip.height - 2))
+	
 	return walks
 		
 def state_space(circuit, width, height, netlist):
-	"""
-		print the upper bound for the given chip
-	"""
 	chip = Chip(circuit, width, height)
 	print("Upper bound (worst case) = ", upper_bound(chip))
 
-	"""
-		print the size of the state space of solutions for a given chip size and netlist size
-	"""
 	netlist_configurations = factorial(len(netlist))
 	print("Number of different netlist configurations = ", scientific_notation(netlist_configurations))
 	print("Number of possible walks per netlist = ", scientific_notation(walks(chip)))
 	print("Total state space size = ", scientific_notation(netlist_configurations * walks(chip)))
 
-	"""
-		print the lower bound for the given circuit and netlist
-	"""
 	print("Lower bound = ", lower_bound(circuit, netlist))

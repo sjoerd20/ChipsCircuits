@@ -44,6 +44,10 @@ class Chip():
 		# store all neighbours of each nodes
 		for id, node in self.nodes.items():
 			self.find_neighbours(id, node)
+	
+	def empty(self):
+		self.walls = [gate.coordinates for gate in self.gates]
+		self.paths = []
 
 	# init nodes at level z and store them in nodes
 	def init_nodes(self, z):

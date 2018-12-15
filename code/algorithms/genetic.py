@@ -4,11 +4,9 @@ from random import choice, shuffle, random, sample
 from shared_functions import *
 from classChip import *
 
-def initial_pop(size, circuit, width, height, algorithm, netlist):
+def initial_pop(size, chip, algorithm, netlist):
 	population = []
 	for i in range(size):
-		chip = Chip(circuit, width, height)
-		chip.load_chip()
 		shuffle(netlist)
 		population.append((netlist[:], fitness(chip, netlist[:], algorithm)))
 	population.sort(key = lambda netlist : netlist[1], reverse = True)
@@ -35,12 +33,10 @@ def create_child(parent_a, parent_b, netlist):
 				temp_netlist.remove(child[i])
 	return child
 
-def next_pop(population_size, circuit, width, height, algorithm, parents, netlist):
+def next_pop(population_size, chip, algorithm, parents, netlist):
 	population = []
 	for i in range(len(parents) // 2):
 		for j in range(population_size):
-			chip = Chip(circuit, width, height)
-			chip.load_chip()
 			child = create_child(parents[i], parents[len(parents) - 1 - i], netlist)
 			population.append((child, fitness(chip, child, algorithm)))
 	population.sort(key = lambda child : child[1], reverse = True)
@@ -56,10 +52,10 @@ def mutate_pop(population, mutation_rate):
 		if random() < mutation_rate:
 			mutate(individual[0])
 
-def make_netlist(population_size, circuit, width, height, algorithm, netlist):
-	population = initial_pop(population_size, circuit, width, height, algorithm, netlist)
+def make_netlist(population_size, chip, algorithm, netlist):
+	population = initial_pop(population_size, chip, algorithm, netlist)
 	while population[0][1] < len(netlist):
 		parents = selection(population, 5)
-		population = next_pop(population_size // 5 + 1, circuit, width, height, algorithm, parents, netlist)
+		population = next_pop(population_size // 5 + 1, chip, algorithm, parents, netlist)
 		mutate_pop(population, 0.1)
 	return population[0][0], population[0][1]
