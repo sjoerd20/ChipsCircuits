@@ -79,3 +79,4 @@ def state_space(circuit, width, height, netlist):
 	print("Total state space size = ", scientific_notation(netlist_configurations * walks(chip)))
 
 	print("Lower bound = ", lower_bound(circuit, netlist))
+	print()
