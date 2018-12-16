@@ -1,5 +1,5 @@
 # put all functions that is used by multiple algorithms
-from classChip import *
+from chip import Chip
 
 # distance between two-dimensional points
 def distance(coords_a, coords_b):
@@ -8,7 +8,7 @@ def distance(coords_a, coords_b):
 # area between two-dimensional points
 def area(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) * abs(coords_a[1] - coords_b[1])
-	
+
 # distance between three-dimensional points
 def heuristic(coords_a, coords_b):
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1]) + abs(coords_a[2] - coords_b[2])
@@ -66,9 +66,9 @@ def walks(chip):
 	walks *= 4 ** ((chip.max_levels - 2) * (2 * chip.width + 2 * chip.height - 8) + 2 * (chip.width - 2)*(chip.height - 2))
 	# on all other spaces, we can go in AT MOST 5 directions
 	walks *= 5 ** ((chip.max_levels - 2) * (chip.width - 2) * (chip.height - 2))
-	
+
 	return walks
-		
+
 def state_space(circuit, width, height, netlist):
 	chip = Chip(circuit, width, height)
 	print("Upper bound (worst case) = ", upper_bound(chip))

@@ -1,5 +1,6 @@
 from shared_functions import *
-import classChip
+from chip import Chip
+from path import Path
 
 x, y, z = 0, 0, 0 		# global variables
 
@@ -50,6 +51,6 @@ def greedy(chip, net):
 
 	# append shortest_path to chip.paths
 	shortest_path.append(goal)
-	chip.paths.append(classChip.Path(net, shortest_path))
+	chip.paths.append(Path(net, shortest_path))
 
 	return net_cost

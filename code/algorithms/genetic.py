@@ -2,7 +2,7 @@
 
 from random import choice, shuffle, random, sample
 from shared_functions import *
-from classChip import *
+from chip import Chip
 
 def initial_pop(size, chip, algorithm, netlist):
 	population = []

@@ -1,17 +1,30 @@
-# add directories to path
-import sys, os
+""" Chips & circuits
+Authors: Ivo de Brouwer, Sjoerd Terpstra
+Course: Programmeertheorie, UvA
+
+
+"""
+
+import sys
+import os
+import argparse
+
+# add directory to path for import of project modules
 directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "results"))
 sys.path.append(os.path.join(directory, "code" , "algorithms"))
 
-from classChip import *
-from load_data import load_data
-from a_star import *
-from greedy import *
-from genetic import *
 import visualization
-import argparse
+import genetic
+import shared_functions as sfunc
+from load_data import load_data
+from a_star import a_star
+from greedy import greedy
+from chip import Chip
+from node import Node
+from path import Path
+
 
 
 def main():
@@ -25,7 +38,7 @@ def main():
 	"""
 		Extract program input
 	"""
-	
+
 	# add parser for command line arguments
 	parser = argparse.ArgumentParser(description="Chips & Circuits. If run without positional arguments deafult program is runned.")
 
@@ -104,7 +117,7 @@ def main():
 				width, height = chip_dimensionsdict[circuit[1]]
 				print("Calculating state space for circuit " + circuit[1] +
 					  " and netlist " + str(netlist[1]))
-				state_space(circuit[0], width, height, netlist[0])
+				sfunc.state_space(circuit[0], width, height, netlist[0])
 				print()
 				is_compatible = True
 	if is_compatible == False:
@@ -131,10 +144,10 @@ def main():
 						# total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization))
 
 						# if total_cost > upper_bound(Chip(circuit[0], width, height)):
-						netlist, cost = make_netlist(population_size, chip, algorithm, netlist[0])
-						total_cost = upper_bound(chip) - fitness(chip, netlist, algorithm, do_visualization)
+						netlist, cost = genetic.make_netlist(population_size, chip, algorithm, netlist[0])
+						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist, algorithm, do_visualization)
 					else:
-						total_cost = upper_bound(chip) - fitness(chip, netlist[0], algorithm, do_visualization)
+						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist[0], algorithm, do_visualization)
 					# test algorithm with netlist obtained from genetic algorithm
 					print("Total cost", algorithm.__name__, " = ", total_cost)
 	return

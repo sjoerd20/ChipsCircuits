@@ -11,19 +11,11 @@ The class Path holds all visited nodes of a single path of a net
 
 """
 
-class Node():
-	def __init__(self, id, coordinates, is_free):
-		self.id = id                        # id string xyz
-		self.coordinates = coordinates      # tuple with x, y, z coordinates
-		self.is_free = is_free              # if node is used
-		self.is_gate = False				# true if node is gate, else false
-		self.L_neighbours = {}				# contains all neighbours (id, node)
+from node import Node
+from path import Path
 
 
-class Path():
-	def __init__(self, net, nodes):
-		self.net = net						# the net from the path
-		self.nodes = nodes 					# holds the nodes of the path
+
 
 class Chip():
 	def __init__(self, circuit, width, height):
@@ -44,7 +36,7 @@ class Chip():
 		# store all neighbours of each nodes
 		for id, node in self.nodes.items():
 			self.find_neighbours(id, node)
-	
+
 	def empty(self):
 		self.walls = [gate.coordinates for gate in self.gates]
 		self.paths = []

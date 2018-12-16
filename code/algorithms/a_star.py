@@ -1,7 +1,10 @@
 import heapq
-from shared_functions import *
-from classChip import *
 from random import random
+
+import shared_functions as sfunc
+from chip import Chip
+from path import Path
+
 
 def a_star(chip, net):
 	start, goal = chip.circuit[net[0]] + (0,), chip.circuit[net[1]] + (0,)
@@ -18,7 +21,7 @@ def a_star(chip, net):
 			new_cost = cost_so_far[current] + 1
 			if next not in cost_so_far or new_cost < cost_so_far[next]:
 				cost_so_far[next] = new_cost
-				priority = new_cost + heuristic(goal, next) + gate_density(chip, next, start, goal) + 3*(7 - next[2])
+				priority = new_cost + sfunc.heuristic(goal, next) + sfunc.gate_density(chip, next, start, goal) + 3*(7 - next[2])
 				heapq.heappush(queue, (priority, next))
 				came_from[next] = current
 
