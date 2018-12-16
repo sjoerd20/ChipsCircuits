@@ -1,50 +1,29 @@
-# TODO implement a better visualization
+"""Visualization
+"""
+
+import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-import numpy as np
-# from termcolor import colored
 
 
-# print the circuit as a simple grid consisting of seperated layers
-def print_simple_grid(chip):
-    for z in range(chip.levels):
-        print("Layer", z)
-        for y in range(chip.height):
-            for x in range(chip.width):
-                print("|",end="")
-                id = str(x) + ", " + str(y) + ", " + str(z)
-                if chip.nodes.get(id) is None:
-                    print(" ",end="")
-                elif chip.nodes.get(id).is_free:
-                    print(" ",end="")
-                elif chip.nodes.get(id).is_gate:
-                    print(colored("o", "red"),end="")
-                else:
-                    print("-",end="")
-            print("|")
-
-# grid representation with matplotlib
 def plot_grid(results_directory, chip, width, height):
+    """2D grid representation using matplotlib"""
 
-	# get all gates
-	x_gates, y_gates = chip.get_gates_coordinates()
-	all_paths_coordinates = chip.get_all_paths_coordinates()
+    # Retrieve coordinates of all gates
+    x_gates, y_gates = chip.get_gates_coordinates()
+    all_paths_coordinates = chip.get_all_paths_coordinates()
 
-	for level in range(4):
-		if level == 0:
-			plot_grid_level(results_directory, width, height,
-							all_paths_coordinates=all_paths_coordinates,
-							x_gates=x_gates, y_gates=y_gates)
-		else:
-			plot_grid_level(results_directory, width, height,
-							all_paths_coordinates=all_paths_coordinates,
-							level=level)
+    for level in range(chip.levels):
+        if level == 0:
+            plot_grid_level(results_directory, width, height,
+                            all_paths_coordinates=all_paths_coordinates,
+                            x_gates=x_gates, y_gates=y_gates)
+        else:
+            plot_grid_level(results_directory, width, height,
+                            all_paths_coordinates=all_paths_coordinates,
+                            level=level)
 
-	# print gates at grid layer 0
-	# plot_grid_level(results_directory, width, height, x_gates=x_gates, y_gates=y_gates)
-
-	plt.show()
-	return
+    return plt.show()
 
 def plot_3D(results_directory, chip, width, height):
 
@@ -120,11 +99,12 @@ def plot_3D(results_directory, chip, width, height):
     ax.yaxis._axinfo["grid"]['color'] =  (1,1,1,0)
 
     plt.savefig(results_directory + "/plot_grid/plot_3D.png")
-    plt.show()
+    return plt.show()
 
-# plot single grid layer
+
 def plot_grid_level(results_directory, width, height, all_paths_coordinates=None,
                     x_gates=None, y_gates=None, level=0):
+    """Plot a single level of a chip"""
 
     colors = ["b", "g", "c", "m", "y"]
     markers = [".", "^", ",", "v", "<", ">"]
@@ -203,4 +183,4 @@ def plot_bounds(results_directory):
 
     fig.tight_layout()
     plt.savefig(results_directory + "lowerbounds.png")
-    plt.show()
+    return plt.show()
