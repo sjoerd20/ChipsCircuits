@@ -27,6 +27,8 @@ from chip import Chip
 from node import Node
 from path import Path
 
+POPULATION_SIZE = 20
+
 def main():
 
 	circuits = load_data(directory + "/data/circuits.txt")
@@ -51,10 +53,6 @@ def main():
 				width, height = chip_dimensionsdict[circuit[1]]
 				sfunc.state_space(circuit[0], width, height, netlist[0])
 
-	"""
-		run desired algorithm
-	"""
-
 	for algorithm in algorithmslist:
 		for circuit in circuitslist:
 			for netlist in netlistslist:
@@ -62,20 +60,11 @@ def main():
 					width, height = chip_dimensionsdict[circuit[1]]
 					chip = Chip(circuit[0], width, height)
 					chip.load_chip()
-					population_size = 20
 					if algorithm == a_star:
-						# netlist[0].sort(key=lambda net: distance(circuit[0][net[0]], circuit[0][net[1]]))
-						# total_cost = test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization)
-						#
-						# netlist[0].sort(key=lambda net: area(circuit[0][net[0]], circuit[0][net[1]]))
-						# total_cost = min(total_cost, test_algorithm(circuit[0], width, height, netlist[0], algorithm, do_visualization))
-
-						# if total_cost > upper_bound(Chip(circuit[0], width, height)):
-						netlist, cost = genetic.make_netlist(population_size, chip, algorithm, netlist[0])
-						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist, algorithm, do_visualization)
+						netlist, cost = genetic.make_netlist(POPULATION_SIZE, chip, algorithm, netlist[0])
+						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist, algorithm, width, height, do_visualization)
 					else:
-						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist[0], algorithm, do_visualization)
-					# test algorithm with netlist obtained from genetic algorithm
+						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist[0], algorithm, width, height, do_visualization)
 					print("Total cost", algorithm.__name__, " = ", total_cost)
 	return
 

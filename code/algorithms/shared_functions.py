@@ -1,5 +1,9 @@
-# put all functions that is used by multiple algorithms
+import os
+
+import visualization
 from chip import Chip
+
+parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # distance between two-dimensional points
 def distance(coords_a, coords_b):
@@ -22,7 +26,7 @@ def gate_density(chip, coordinates, start, goal):
 	return dist
 
 # score/fitness function
-def fitness(chip, netlist, algorithm, do_visualization = False):
+def fitness(chip, netlist, algorithm, width, height, do_visualization = False):
 	chip.empty()
 	gates = chip.gates[:]
 	cost = 0
@@ -32,8 +36,8 @@ def fitness(chip, netlist, algorithm, do_visualization = False):
 		except KeyError:
 			return index
 	if do_visualization == True:
-		visualization.plot_3D(directory + "/results", chip, width, height)
-		visualization.plot_grid(directory + "/results", chip, width, height)
+		visualization.plot_3D(parent_dir + "/results", chip, width, height)
+		visualization.plot_grid(parent_dir + "/results", chip, width, height)
 	print(netlist)
 	return upper_bound(chip) - cost
 
