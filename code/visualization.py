@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def plot_grid(results_directory, chip, width, height):
+def plot_grid(results_directory, chip):
     """2D grid representation using matplotlib"""
 
     # Retrieve coordinates of all gates
@@ -15,17 +15,17 @@ def plot_grid(results_directory, chip, width, height):
 
     for level in range(chip.levels):
         if level == 0:
-            plot_grid_level(results_directory, width, height,
+            plot_grid_level(results_directory, chip.width, chip.height,
                             all_paths_coordinates=all_paths_coordinates,
                             x_gates=x_gates, y_gates=y_gates)
         else:
-            plot_grid_level(results_directory, width, height,
+            plot_grid_level(results_directory, chip.width, chip.height,
                             all_paths_coordinates=all_paths_coordinates,
                             level=level)
 
     return plt.show()
 
-def plot_3D(results_directory, chip, width, height):
+def plot_3D(results_directory, chip):
 
     # get all gates
     x_gates, y_gates = chip.get_gates_coordinates()
@@ -42,8 +42,8 @@ def plot_3D(results_directory, chip, width, height):
     ax = fig.add_subplot(111, projection='3d')
 
     # set ticks to step of 1 for correct grid
-    x_ticks = range(width)
-    y_ticks = range(height)
+    x_ticks = range(chip.width)
+    y_ticks = range(chip.height)
     z_ticks = range(chip.levels)
     ax.set_xticks(x_ticks)
     ax.set_yticks(y_ticks)
@@ -85,8 +85,8 @@ def plot_3D(results_directory, chip, width, height):
     # set correct limits and initiate grid
     plt.title("3D representation of the chip (25 gates) filled with " +
                 str(len(all_paths_coordinates)) + " nets")
-    ax.set_xlim(0, width)
-    ax.set_ylim(0, height)
+    ax.set_xlim(0, chip.width)
+    ax.set_ylim(0, chip.height)
     ax.set_zlim(0, chip.levels)
     # plt.gca().invert_xaxis()
     plt.gca().invert_yaxis()        # invert the y-axis to get correct view
@@ -102,7 +102,7 @@ def plot_3D(results_directory, chip, width, height):
     return plt.show()
 
 
-def plot_grid_level(results_directory, width, height, all_paths_coordinates=None,
+def plot_grid_level(results_directory, all_paths_coordinates=None,
                     x_gates=None, y_gates=None, level=0):
     """Plot a single level of a chip"""
 
@@ -112,8 +112,8 @@ def plot_grid_level(results_directory, width, height, all_paths_coordinates=None
     marker_index = 0
 
     fig, ax = plt.subplots()
-    x_ticks = range(width)      # set ticks to step of 1 for correct grid
-    y_ticks = range(height)     # set ticks to step of 1 for correct grid
+    x_ticks = range(chip.width)      # set ticks to step of 1 for correct grid
+    y_ticks = range(chip.height)     # set ticks to step of 1 for correct grid
     ax.set_xticks(x_ticks)
     ax.set_yticks(y_ticks)
 
@@ -150,8 +150,8 @@ def plot_grid_level(results_directory, width, height, all_paths_coordinates=None
 
     # set correct limits and initiate grid
     plt.title("Chip level " + str(level))
-    ax.set_xlim(-0.2, width - 0.8)
-    ax.set_ylim(-0.2, height - 0.8)
+    ax.set_xlim(-0.2, chip.width - 0.8)
+    ax.set_ylim(-0.2, chip.height - 0.8)
     plt.gca().invert_yaxis()        # invert the y-axis to get correct view
     ax.grid(alpha=1)
     plt.savefig(results_directory + "/plot_grid/plot_grid" + str(level) + ".png")
@@ -170,7 +170,7 @@ def plot_bounds(results_directory):
 
     # n_groups = 3
     # index = np.arange(n_groups)
-    # bar_width = 1
+    # bar_chip.width = 1
 
     for axes in ax:
         axes.set_xlabel('lengte netlists')

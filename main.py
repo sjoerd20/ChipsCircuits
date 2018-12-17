@@ -62,9 +62,9 @@ def main():
 					chip.load_chip()
 					if algorithm == a_star:
 						netlist, cost = genetic.make_netlist(POPULATION_SIZE, chip, algorithm, netlist[0])
-						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist, algorithm, width, height, do_visualization)
+						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist, algorithm, do_visualization)
 					else:
-						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist[0], algorithm, width, height, do_visualization)
+						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist[0], algorithm, do_visualization)
 					print("Total cost", algorithm.__name__, " = ", total_cost)
 	return
 

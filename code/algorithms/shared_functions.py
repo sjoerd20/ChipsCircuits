@@ -19,26 +19,35 @@ def heuristic(coords_a, coords_b):
 
 # calculates how many gates are nearby; used to avoid 'blocking' gates
 def gate_density(chip, coordinates, start, goal):
-	dist = 1
+	dist = 0
 	for gate in chip.gates:
 		if heuristic(gate.coordinates, coordinates) == 1 and gate.coordinates != start and gate.coordinates != goal:
-			dist *= 10
+			dist += 10
 	return dist
 
 # score/fitness function
-def fitness(chip, netlist, algorithm, width, height, do_visualization = False):
+def fitness(chip, netlist, algorithm, do_visualization = False):
 	chip.empty()
 	gates = chip.gates[:]
+	for gate in gates:
+		for next in chip.possible_neighbors(gate.coordinates):
+			chip.walls.append(next)
 	cost = 0
 	for index, net in enumerate(netlist):
+		for gate in gates:
+			if gate.coordinates == chip.circuit[net[0]] + (0,) or gate.coordinates == chip.circuit[net[1]] + (0,):
+				for next in chip.possible_neighbors(gate.coordinates):
+					try:
+						chip.walls.remove(next)
+					except:
+						pass
 		try:
 			cost += algorithm(chip, net)
 		except KeyError:
 			return index
 	if do_visualization == True:
-		visualization.plot_3D(parent_dir + "/results", chip, width, height)
-		visualization.plot_grid(parent_dir + "/results", chip, width, height)
-	print(netlist)
+		visualization.plot_3D(parent_dir + "/results", chip)
+		visualization.plot_grid(parent_dir + "/results", chip)
 	return upper_bound(chip) - cost
 
 # largest lower bound

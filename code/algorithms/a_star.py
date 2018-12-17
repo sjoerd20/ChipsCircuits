@@ -21,7 +21,7 @@ def a_star(chip, net):
 			new_cost = cost_so_far[current] + 1
 			if next not in cost_so_far or new_cost < cost_so_far[next]:
 				cost_so_far[next] = new_cost
-				priority = new_cost + sfunc.heuristic(goal, next) + sfunc.gate_density(chip, next, start, goal) + 3*(7 - next[2])
+				priority = new_cost + sfunc.heuristic(goal, next) + sfunc.gate_density(chip, next, start, goal) + (7 - next[2])
 				heapq.heappush(queue, (priority, next))
 				came_from[next] = current
 
