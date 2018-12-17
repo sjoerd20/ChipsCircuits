@@ -24,17 +24,11 @@ Het doel? Alle nets plaatsen, en de totale kosten zo laag mogelijk houden.
 ### Analyse state space
 
 Hoe groot is de state space nou eigenlijk?
-Er zijn twee niveaus van complexiteit:
-* In welke volgorde leg je de nets uit de netlist neer?
-
-  Je kunt een netlist van k nets op k! verschillende volgorden sorteren. Al deze volgorden zijn anders en we weten niet welke het beste onze kosten optimizeren, dus ze zijn allemaal te overwegen.
-  De grootste netlist van onze probleemtoestand bevat 70 nets. Deze kunnen we dus op 70! ≈ 1.2 * 10^100 verschillende volgorden sorteren.
   
-* Nadat je een volgorde hebt gekozen om de nets te plaatsen, hoe leg je de nets neer?
 
-  We hebben een chip met breedte x, lengte y en hoogte z. Dan heeft deze inhoud U = x * y * z, en we kunnen maximaal U stappen nemen. Dit is dus tevens de upper bound van onze total cost. Op elk punt kunnen we een aantal verschillende kanten op. Er zijn 6 verschillende richtingen: vier kanten op het vlak, naar boven en naar onderen. Maar vanuit elk punt kunnen we hooguit 5 richtingen op: vanuit een gate kunnen we niet naar onderen, en als we eenmaal vanuit de gate zijn gelopen kunnen we niet meer teruglopen. Als we in een hoek zitten kunnen we nog minder kanten op!
+We hebben een chip met breedte x, lengte y en hoogte z. Dan heeft deze inhoud U = x * y * z, en we kunnen maximaal U stappen nemen. Dit is dus tevens de upper bound van onze total cost. Op elk punt kunnen we een aantal verschillende kanten op. Er zijn 6 verschillende richtingen: vier kanten op het vlak, naar boven en naar onderen. Maar vanuit elk punt kunnen we hooguit 5 richtingen op: vanuit een gate kunnen we niet naar onderen, en als we eenmaal vanuit de gate zijn gelopen kunnen we niet meer teruglopen. Als we in een hoek zitten kunnen we nog minder kanten op!
   
-  Laten we zien hoe dat er uit ziet:
+  Laten we eens kijken hoe dat er uit ziet:
   ![1](pictures/chips1.png)
   ![2](pictures/chips2.png)
   
@@ -49,11 +43,6 @@ Er zijn twee niveaus van complexiteit:
   Vanuit alle andere punten, dit zijn er (x-2) * (y-2) * (z-2), kunnen we hooguit 5 kanten op.
   
   Er zijn dus tot wel ![3](pictures/chips.gif) ≈ 3.1 * 10^1593 manieren om de nets neer te leggen.
-  
-De grootte van onze space state is het product van deze twee.
-Als we de grootste netlist van 70 nets en het grote circuit van 18 bij 17 bij 8 invullen krijgen we:
-
-1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijkheden.
 
 ### Wat maakt ons probleem moeilijk?
 
@@ -69,7 +58,7 @@ Voor het sorteren van de netlists hebben we een genetisch algoritme gebruikt.
 
 Voor het neerleggen van de nets hebben we gebruik gemaakt van een greedy pathfinding algoritme, en van A*, een bekend pathfinding algoritme.
 
-*Deze algoritmes worden uitgelegd en besproken in /code/README.md*
+*Deze algoritmes worden uitgelegd en besproken in /code/README.md en /code/algorithms/README.md*
 
 ### Vergelijken van oplossingen
 
@@ -129,4 +118,12 @@ python main.py
 * Sjoerd Terpstra
 
 ## Dankwoord
+- Minor programmeren UvA
 
+- Daan van den Berg
+
+- Reitze Jansen (onze TA)
+
+- A*
+
+- iedereen die ik vergeten ben
