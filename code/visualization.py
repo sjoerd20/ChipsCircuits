@@ -1,4 +1,6 @@
 """Visualization
+
+This file contains the code for a 2D and a 3D visualization
 """
 
 import numpy as np
@@ -25,8 +27,10 @@ def plot_grid(results_directory, chip):
 
     return plt.show()
 
-def plot_3D(results_directory, chip):
 
+def plot_3D(results_directory, chip):
+    """3D plot of the chip"""
+    
     # get all gates
     x_gates, y_gates = chip.get_gates_coordinates()
     all_paths_coordinates = chip.get_all_paths_coordinates()
@@ -99,7 +103,7 @@ def plot_3D(results_directory, chip):
     ax.yaxis._axinfo["grid"]['color'] =  (1,1,1,0)
 
     plt.savefig(results_directory + "/plot_grid/plot_3D.png")
-    plt.show()
+    return plt.show()
 
 
 def plot_grid_level(results_directory, chip, all_paths_coordinates=None,
@@ -156,9 +160,9 @@ def plot_grid_level(results_directory, chip, all_paths_coordinates=None,
     ax.grid(alpha=1)
     plt.savefig(results_directory + "/plot_grid/plot_grid" + str(level) + ".png")
 
-    return
 
 def plot_bounds(results_directory):
+    """Plots the upper and lower bound of the costs in a histogram"""
     lower_bounds_small = [291, 341, 475]
     lower_bounds_small_x = [30, 40, 50]
     lower_bounds_large = [600, 578, 761]
