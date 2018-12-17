@@ -5,6 +5,7 @@ from path import Path
 x, y, z = 0, 0, 0 		# global variables
 
 def move(coordinates, chip):
+	"""Move to an adjacent point in the chip"""
 	id = str(coordinates[0]) + ", " + str(coordinates[1]) + ", " + str(coordinates[2])
 	global x, y, z
 	if chip.nodes.get(id).is_free:
@@ -21,6 +22,7 @@ def move(coordinates, chip):
 	return(chip.nodes.get(id))
 
 def greedy(chip, net):
+	"""Greedy algorithm tries to move from gate to gate as directly as possible"""
 	start, goal = chip.circuit[net[0]] + (0,), chip.circuit[net[1]] + (0,)
 	shortest_path = [start]
 	node = None
