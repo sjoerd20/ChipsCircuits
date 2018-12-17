@@ -63,21 +63,14 @@ def mutate_pop(population, mutation_rate):
 
 def make_netlist(population_size, chip, algorithm, netlist, do_visualization = False):
 	i = 0
-	L_i = []
-	L_costs = []
-	L_number_placed = []
 	population = initial_pop(population_size, chip, algorithm, netlist)
 	while population[0][1] < len(netlist) and i < 50:
 		mutate_pop(population, 0.1)
 		parents = selection(population, 5)
 		population = next_pop(population_size // 5 + 1, chip, algorithm, parents, netlist)
 		print("Generation {}: placed nets: {}, score: {}".format(i, population[0][1], upper_bound(chip) - population[0][1]))
-		L_i.append(i)
-		L_costs.append(upper_bound(chip) - population[0][1])
-		L_number_placed.append(population[0][1])
 		i += 1
 	if do_visualization and population[0][1] >= len(netlist):
 		visualization.plot_3D(parent_dir + "/results", chip)
 		visualization.plot_grid(parent_dir + "/results", chip)
-	print(L_i, L_costs, L_number_placed)
 	return population[0][0], population[0][1]
