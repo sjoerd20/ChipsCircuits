@@ -89,7 +89,7 @@ def state_space(circuit, width, height, netlist):
 	netlist_configurations = factorial(len(netlist))
 	print("Number of different netlist configurations = ", scientific_notation(netlist_configurations))
 	print("Number of possible walks per netlist = ", scientific_notation(walks(chip)))
-	print("Total state space size = ", scientific_notation(netlist_configurations * walks(chip)))
+	print("Maximum state space size = ", scientific_notation(netlist_configurations * walks(chip)))
 
 	print("Lower bound = ", lower_bound(circuit, netlist))
 	print()

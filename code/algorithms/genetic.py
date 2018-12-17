@@ -54,8 +54,10 @@ def mutate_pop(population, mutation_rate):
 
 def make_netlist(population_size, chip, algorithm, netlist):
 	population = initial_pop(population_size, chip, algorithm, netlist)
-	while population[0][1] < len(netlist):
+	while population[0][1] < len(netlist) and i < 50:
+		mutate_pop(population, 0.1)
 		parents = selection(population, 5)
 		population = next_pop(population_size // 5 + 1, chip, algorithm, parents, netlist)
-		mutate_pop(population, 0.1)
+		print("Generation {}: {}".format(i, upper_bound(chip) - population[0][1]))
+		i++
 	return population[0][0], population[0][1]
