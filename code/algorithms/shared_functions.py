@@ -7,13 +7,8 @@ parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__f
 
 
 def distance(coords_a, coords_b):
-	"""Returns distance between two-dimensional points"""
+	"""Returns the Manhattan distance between two-dimensional points"""
 	return abs(coords_a[0] - coords_b[0]) + abs(coords_a[1] - coords_b[1])
-
-
-def area(coords_a, coords_b):
-	"""Returns area between two-dimensional points"""
-	return abs(coords_a[0] - coords_b[0]) * abs(coords_a[1] - coords_b[1])
 
 
 def heuristic(coords_a, coords_b):
