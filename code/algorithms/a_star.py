@@ -7,6 +7,7 @@ from path import Path
 
 
 def a_star(chip, net):
+	"""A* is a best-first search; it tries to find the shortest path between two points"""
 	start, goal = chip.circuit[net[0]] + (0,), chip.circuit[net[1]] + (0,)
 	came_from, cost_so_far = {}, {}
 	came_from[start], cost_so_far[start] = None, 0
