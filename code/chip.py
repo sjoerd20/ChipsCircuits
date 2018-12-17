@@ -3,8 +3,7 @@ from path import Path
 
 
 class Chip():
-	""" This class contains the chip and the nodes within
-	"""
+	""" This class contains the chip and the nodes within"""
 	def __init__(self, circuit, width, height):
 		self.levels = 0					# amount of layers of chip
 		self.max_levels = 8				# maximum amount of layers
@@ -113,14 +112,21 @@ class Chip():
 		return id not in self.walls
 
 	def neighbors(self, id, goal = None):
+		"""Returns an iterable of the coordinates of all neighbours of a
+		point
+		"""
 		(x, y, z) = id
-		results = [(x+1, y, z), (x, y-1, z), (x-1, y, z), (x, y+1, z), (x, y, z-1), (x, y, z+1)]
+		results = [(x+1, y, z), (x, y-1, z), (x-1, y, z), (x, y+1, z), \
+					(x, y, z-1), (x, y, z+1)]
 		if goal not in results:
 			results = filter(self.in_bounds, results)
 			results = filter(self.passable, results)
 		return results
 
 	def possible_neighbors(self, id):
+		"""Returns a list of the coordinates of all possible neighbours of a
+		point
+		"""
 		(x, y, z) = id
-		results = [(x+1, y, z), (x, y-1, z), (x-1, y, z), (x, y+1, z), (x, y, z-1), (x, y, z+1)]
-		return results
+		return [(x+1, y, z), (x, y-1, z), (x-1, y, z), (x, y+1, z),\
+				(x, y, z-1), (x, y, z+1)]

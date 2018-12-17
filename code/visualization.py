@@ -15,11 +15,11 @@ def plot_grid(results_directory, chip):
 
     for level in range(chip.levels):
         if level == 0:
-            plot_grid_level(results_directory, chip.width, chip.height,
+            plot_grid_level(results_directory, chip,
                             all_paths_coordinates=all_paths_coordinates,
                             x_gates=x_gates, y_gates=y_gates)
         else:
-            plot_grid_level(results_directory, chip.width, chip.height,
+            plot_grid_level(results_directory, chip,
                             all_paths_coordinates=all_paths_coordinates,
                             level=level)
 
@@ -99,10 +99,10 @@ def plot_3D(results_directory, chip):
     ax.yaxis._axinfo["grid"]['color'] =  (1,1,1,0)
 
     plt.savefig(results_directory + "/plot_grid/plot_3D.png")
-    return plt.show()
+    plt.show()
 
 
-def plot_grid_level(results_directory, all_paths_coordinates=None,
+def plot_grid_level(results_directory, chip, all_paths_coordinates=None,
                     x_gates=None, y_gates=None, level=0):
     """Plot a single level of a chip"""
 
