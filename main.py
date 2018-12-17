@@ -56,15 +56,25 @@ def main():
 	for algorithm in algorithmslist:
 		for circuit in circuitslist:
 			for netlist in netlistslist:
-				if (circuit[1] == "small" and (netlist[1] == 1 or netlist[1] == 2 or netlist[1] == 3)) or (circuit[1] == "large" and (netlist[1] == 4 or netlist[1] == 5 or netlist[1] == 6)):
+				if (circuit[1] == "small" and (netlist[1] == 1 \
+						or netlist[1] == 2 or netlist[1] == 3)) \
+						or (circuit[1] == "large" and (netlist[1] == 4 \
+						or netlist[1] == 5 or netlist[1] == 6)):
 					width, height = chip_dimensionsdict[circuit[1]]
 					chip = Chip(circuit[0], width, height)
 					chip.load_chip()
 					if algorithm == a_star:
-						netlist, cost = genetic.make_netlist(POPULATION_SIZE, chip, algorithm, netlist[0], do_visualization)
-						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist, algorithm, do_visualization)
+						netlist, cost = genetic.make_netlist(POPULATION_SIZE, \
+															chip, algorithm, \
+															netlist[0], \
+															do_visualization)
+						total_cost = sfunc.upper_bound(chip) \
+							- sfunc.fitness(chip, netlist, algorithm, \
+											do_visualization)
 					else:
-						total_cost = sfunc.upper_bound(chip) - sfunc.fitness(chip, netlist[0], algorithm, do_visualization)
+						total_cost = sfunc.upper_bound(chip) \
+							- sfunc.fitness(chip, netlist[0], \
+											algorithm, do_visualization)
 					print("Total cost", algorithm.__name__, " = ", total_cost)
 	return
 
@@ -85,7 +95,8 @@ def command_parser(circuits, netlists):
 	"""
 
 	# Add parser for command line arguments
-	parser = argparse.ArgumentParser(description="Chips & Circuits. If run without positional arguments deafult program is runned.")
+	parser = argparse.ArgumentParser(description="Chips & Circuits. If run \
+			without positional arguments deafult program is runned.")
 
 	# Add all possible algorithms/circuits/netlists to dicts
 	algorithmsdict = {"greedy" : greedy, "a_star" : a_star,

@@ -69,12 +69,18 @@ def scientific_notation(n):
 
 
 def walks(chip):
-	# can only go in two directions from the corners on the outer layers (lowest and highest)
+	# can only go in two directions from the corners on the outer layers
+	# (lowest and highest)
 	walks =  2 ** (2 * 4)
-	# can only go in three directions from all other corners, and on the outer circle on the outer layers
-	walks *= 3 ** (2 * (2 * chip.width + 2 * chip.height - 8) + (chip.max_levels - 2) * 4)
-	# can only go in four directions on the outer circle on other layers, and on all other spaces on the outer layers
-	walks *= 4 ** ((chip.max_levels - 2) * (2 * chip.width + 2 * chip.height - 8) + 2 * (chip.width - 2)*(chip.height - 2))
+	# can only go in three directions from all other corners, and on the outer
+	# circle on the outer layers
+	walks *= 3 ** (2 * (2 * chip.width + 2 * chip.height - 8) \
+		+ (chip.max_levels - 2) * 4)
+	# can only go in four directions on the outer circle on other layers,
+	# and on all other spaces on the outer layers
+	walks *= 4 ** ((chip.max_levels - 2) \
+		* (2 * chip.width + 2 * chip.height - 8) \
+		+ 2 * (chip.width - 2)*(chip.height - 2))
 	# on all other spaces, we can go in AT MOST 5 directions
 	walks *= 5 ** ((chip.max_levels - 2) * (chip.width - 2) * (chip.height - 2))
 	return walks
@@ -86,8 +92,11 @@ def state_space(circuit, width, height, netlist):
 	print("Upper bound (worst case) = ", upper_bound(chip))
 
 	netlist_configurations = factorial(len(netlist))
-	print("Number of different netlist configurations = ", scientific_notation(netlist_configurations))
-	print("Number of possible walks per netlist = ", scientific_notation(walks(chip)))
-	print("Maximum state space size = ", scientific_notation(netlist_configurations * walks(chip)))
+	print("Number of different netlist configurations = ", \
+		scientific_notation(netlist_configurations))
+	print("Number of possible walks per netlist = ", \
+		scientific_notation(walks(chip)))
+	print("Maximum state space size = ", \
+	scientific_notation(netlist_configurations * walks(chip)))
 	print("Lower bound = ", lower_bound(circuit, netlist))
 	print()

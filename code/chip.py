@@ -45,7 +45,8 @@ class Chip():
 		for neighbour in possible_neighbours:
 
 			# check for each neighbour if they exist
-			id = str(neighbour[0]) + ", " + str(neighbour[1]) + ", " + str(neighbour[2])
+			id = str(neighbour[0]) + ", " + str(neighbour[1]) + ", " \
+				+ str(neighbour[2])
 			if id in self.nodes:
 				node.L_neighbours[id] = self.nodes[id]
 
@@ -76,7 +77,8 @@ class Chip():
 		"""Returns 3 lists with x-, y-, z-coordinates of all occupied nodes"""
 		x, y, z = [], [], []
 		for node_id in self.walls:
-			id = str(node_id[0]) + ", " + str(node_id[1]) + ", " + str(node_id[2])
+			id = str(node_id[0]) + ", " + str(node_id[1]) + ", " \
+				+ str(node_id[2])
 			node = self.nodes.get(id)
 			if node.is_gate == False:
 				x.append(node.coordinates[0])
@@ -99,14 +101,16 @@ class Chip():
 
 		path_coordinates = []
 		for node_id in path.nodes:
-			id = str(node_id[0]) + ", " + str(node_id[1]) + ", " + str(node_id[2])
+			id = str(node_id[0]) + ", " + str(node_id[1]) + ", " \
+				+ str(node_id[2])
 			node = self.nodes.get(id)
 			path_coordinates.append(node.coordinates)
 		return path_coordinates
 
 	def in_bounds(self, id):
 		(x, y, z) = id
-		return 0 <= x < self.width and 0 <= y < self.height and 0 <= z < self.levels
+		return 0 <= x < self.width and 0 <= y < self.height \
+			and 0 <= z < self.levels
 
 	def passable(self, id):
 		return id not in self.walls

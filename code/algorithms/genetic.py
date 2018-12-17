@@ -27,8 +27,10 @@ def selection(population, sample):
 
 
 def create_child(parent_a, parent_b, netlist):
-	"""Create children who inherit a net if both parents share that net on the same index;
-	the remainder is inherited in a random order from the remaining nets"""
+	"""Create children who inherit a net if both parents share that net on the
+	same index. The remainder is inherited in a random order from the remaining
+	nets
+	"""
 	temp_netlist = [netlist[i] for i in range(len(netlist))]
 	child = [0 for i in range(len(parent_a))]
 	for i in range(len(parent_a)):
@@ -48,7 +50,8 @@ def next_pop(population_size, chip, algorithm, parents, netlist):
 	population = []
 	for i in range(len(parents) // 2):
 		for j in range(population_size):
-			child = create_child(parents[i], parents[len(parents) - 1 - i], netlist)
+			child = create_child(parents[i], parents[len(parents) - 1 - i], \
+								netlist)
 			population.append((child, fitness(chip, child, algorithm)))
 	population.sort(key = lambda child : child[1], reverse = True)
 	return population
@@ -68,13 +71,17 @@ def mutate_pop(population, mutation_rate):
 			mutate(individual[0])
 
 
-def make_netlist(population_size, chip, algorithm, netlist, do_visualization = False):
-	"""Do the genetic algorithm until you obtain a netlist reordering that A* can obtain a valid solution from"""
+def make_netlist(population_size, chip, algorithm, netlist,
+				do_visualization = False):
+	"""Do the genetic algorithm until you obtain a netlist reordering that A*
+	can obtain a valid solution from
+	"""
 	population = initial_pop(population_size, chip, algorithm, netlist)
 	while population[0][1] < len(netlist):
 		mutate_pop(population, 0.1)
 		parents = selection(population, 5)
-		population = next_pop(population_size // 5 + 1, chip, algorithm, parents, netlist)
+		population = next_pop(population_size // 5 + 1, chip, algorithm, \
+								parents, netlist)
 	if do_visualization and population[0][1] >= len(netlist):
 		visualization.plot_3D(parent_dir + "/results", chip)
 		visualization.plot_grid(parent_dir + "/results", chip)

@@ -30,7 +30,7 @@ def plot_grid(results_directory, chip):
 
 def plot_3D(results_directory, chip):
     """3D plot of the chip"""
-    
+
     # get all gates
     x_gates, y_gates = chip.get_gates_coordinates()
     all_paths_coordinates = chip.get_all_paths_coordinates()
@@ -83,7 +83,8 @@ def plot_3D(results_directory, chip):
 
     # plot gates if provided
     if (x_gates and y_gates) != None:
-        ax.plot(x_gates, y_gates, [0 for i in range(len(x_gates))], 'ro', markersize=10)
+        ax.plot(x_gates, y_gates, [0 for i in range(len(x_gates))], 'ro'\
+                , markersize=10)
 
     # ax.scatter(xs, ys, zs)
     # set correct limits and initiate grid
@@ -169,8 +170,10 @@ def plot_bounds(results_directory):
     lower_bounds_large_x = [50, 60, 70]
 
     fig, ax = plt.subplots(nrows=1, ncols=2)
-    bounds_small = ax[0].bar(lower_bounds_small_x, lower_bounds_small, align='center', width=10, edgecolor='k')
-    bounds_large = ax[1].bar(lower_bounds_large_x, lower_bounds_large, align='center', width=10, edgecolor='k')
+    bounds_small = ax[0].bar(lower_bounds_small_x, lower_bounds_small, \
+        align='center', width=10, edgecolor='k')
+    bounds_large = ax[1].bar(lower_bounds_large_x, lower_bounds_large, \
+        align='center', width=10, edgecolor='k')
 
     # n_groups = 3
     # index = np.arange(n_groups)
