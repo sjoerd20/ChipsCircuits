@@ -71,14 +71,11 @@ def mutate_pop(population, mutation_rate):
 def make_netlist(population_size, chip, algorithm, netlist, do_visualization = False):
 	"""Do the genetic algorithm until you obtain a netlist reordering that A* can obtain a valid solution from,
 	or use the reordering which has placed the most nets using A* after 50 generations have passed"""
-	i = 0
 	population = initial_pop(population_size, chip, algorithm, netlist)
-	while population[0][1] < len(netlist) and i < 50:
+	while population[0][1] < len(netlist):
 		mutate_pop(population, 0.1)
 		parents = selection(population, 5)
 		population = next_pop(population_size // 5 + 1, chip, algorithm, parents, netlist)
-		print("Generation {}: placed nets: {}, score: {}".format(i, population[0][1], upper_bound(chip) - population[0][1]))
-		i += 1
 	if do_visualization and population[0][1] >= len(netlist):
 		visualization.plot_3D(parent_dir + "/results", chip)
 		visualization.plot_grid(parent_dir + "/results", chip)
