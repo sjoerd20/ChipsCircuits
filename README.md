@@ -126,4 +126,4 @@ python main.py
 
 - A*
 
-- iedereen die ik vergeten ben
+- iedereen die we vergeten zijn
