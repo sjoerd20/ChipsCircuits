@@ -69,8 +69,7 @@ def mutate_pop(population, mutation_rate):
 
 
 def make_netlist(population_size, chip, algorithm, netlist, do_visualization = False):
-	"""Do the genetic algorithm until you obtain a netlist reordering that A* can obtain a valid solution from,
-	or use the reordering which has placed the most nets using A* after 50 generations have passed"""
+	"""Do the genetic algorithm until you obtain a netlist reordering that A* can obtain a valid solution from"""
 	population = initial_pop(population_size, chip, algorithm, netlist)
 	while population[0][1] < len(netlist):
 		mutate_pop(population, 0.1)
