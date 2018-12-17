@@ -43,11 +43,6 @@ We hebben een chip met breedte x, lengte y en hoogte z. Dan heeft deze inhoud U 
   Vanuit alle andere punten, dit zijn er (x-2) * (y-2) * (z-2), kunnen we hooguit 5 kanten op.
   
   Er zijn dus tot wel ![3](pictures/chips.gif) ≈ 3.1 * 10^1593 manieren om de nets neer te leggen.
-  
-De grootte van onze space state is het product van deze twee.
-Als we de grootste netlist van 70 nets en het grote circuit van 18 bij 17 bij 8 invullen krijgen we:
-
-1.2 * 10^100 * 3.1 * 10^1593 = 3.7 * 10^1693 mogelijkheden.
 
 ### Wat maakt ons probleem moeilijk?
 
