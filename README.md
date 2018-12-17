@@ -129,4 +129,12 @@ python main.py
 * Sjoerd Terpstra
 
 ## Dankwoord
+- Minor programmeren UvA
 
+- Daan van den Berg
+
+- Reitze Jansen (onze TA)
+
+- A*
+
+- iedereen die ik vergeten ben
