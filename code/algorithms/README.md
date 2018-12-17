@@ -1,3 +1,5 @@
+## Algorithms
+
 ### Greedy algoritme (greedy.py)
 
 Een algoritme dat direct van gate naar gate probeert te gaan, en simpelweg omhoog of omlaag gaat als het niet verder kan op dezelfde laag. 
