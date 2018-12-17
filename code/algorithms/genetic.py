@@ -8,6 +8,7 @@ parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__f
 
 
 def initial_pop(size, chip, algorithm, netlist):
+	"""Create an initial population of randomly ordered copies of a netlist"""
 	population = []
 	for i in range(size):
 		shuffle(netlist)
@@ -17,6 +18,7 @@ def initial_pop(size, chip, algorithm, netlist):
 
 
 def selection(population, sample):
+	"""Select the best sample from the population for breeding"""
 	parents = []
 	for i in range(sample):
 		parents.append(population[i][0])
@@ -25,6 +27,8 @@ def selection(population, sample):
 
 
 def create_child(parent_a, parent_b, netlist):
+	"""Create children who inherit a net if both parents share that net on the same index;
+	the remainder is inherited in a random order from the remaining nets"""
 	temp_netlist = [netlist[i] for i in range(len(netlist))]
 	child = [0 for i in range(len(parent_a))]
 	for i in range(len(parent_a)):
@@ -40,6 +44,7 @@ def create_child(parent_a, parent_b, netlist):
 
 
 def next_pop(population_size, chip, algorithm, parents, netlist):
+	"""Create a new population"""
 	population = []
 	for i in range(len(parents) // 2):
 		for j in range(population_size):
@@ -50,18 +55,22 @@ def next_pop(population_size, chip, algorithm, parents, netlist):
 
 
 def mutate(individual):
+	"""Mutate an individual by swapping two nets"""
 	ids = range(len(individual))
 	a, b = sample(ids, 2)
 	individual[a], individual[b] = individual[b], individual[a]
 
 
 def mutate_pop(population, mutation_rate):
+	"""Mutate individuals randomly from a population at a given rate"""
 	for individual in population:
 		if random() < mutation_rate:
 			mutate(individual[0])
 
 
 def make_netlist(population_size, chip, algorithm, netlist, do_visualization = False):
+	"""Do the genetic algorithm until you obtain a netlist reordering that A* can obtain a valid solution from,
+	or use the reordering which has placed the most nets using A* after 50 generations have passed"""
 	i = 0
 	population = initial_pop(population_size, chip, algorithm, netlist)
 	while population[0][1] < len(netlist) and i < 50:
