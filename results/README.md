@@ -10,5 +10,5 @@
 
 ## netlist1_plot
 
-Results from using netlists reorderings obtained from our genetic algorithm for 50 generations. Only for the first netlist.
-The green line is the lower bound for the total cost.
+Resultaten van het gebruiken van recombinaties van de netlist met A* verkregen van het genetisch algoritmen.
+Netlist 1, 50 generaties; de groene lijn is de lower bound van de total cost.
