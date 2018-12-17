@@ -58,7 +58,7 @@ Voor het sorteren van de netlists hebben we een genetisch algoritme gebruikt.
 
 Voor het neerleggen van de nets hebben we gebruik gemaakt van een greedy pathfinding algoritme, en van A*, een bekend pathfinding algoritme.
 
-*Deze algoritmes worden uitgelegd en besproken in /code/README.md*
+*Deze algoritmes worden uitgelegd en besproken in /code/README.md en /code/algorithms/README.md *
 
 ### Vergelijken van oplossingen
 
