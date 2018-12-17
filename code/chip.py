@@ -122,11 +122,3 @@ class Chip():
 			results = filter(self.in_bounds, results)
 			results = filter(self.passable, results)
 		return results
-
-	def possible_neighbors(self, id):
-		"""Returns a list of the coordinates of all possible neighbours of a
-		point
-		"""
-		(x, y, z) = id
-		return [(x+1, y, z), (x, y-1, z), (x-1, y, z), (x, y+1, z),\
-				(x, y, z-1), (x, y, z+1)]
